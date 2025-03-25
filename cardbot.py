@@ -31,6 +31,6 @@ async def root(request: Request):
             text = {
                 'text': '参数错误'
             }
-        message.send_msg(group_id, text)
+        await message.send_msg(group_id, text)
 if __name__ == "__main__":
     uvicorn.run(app, port=8070)
