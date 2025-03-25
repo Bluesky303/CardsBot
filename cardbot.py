@@ -23,7 +23,8 @@ async def root(request: Request):
                 text = [{
             'type': 'at',
             'data': {
-                'qq', user_id
+                'qq': str(user_id),
+                'name': '不见了'
             }
         },{
                     'type': 'text',

@@ -39,7 +39,8 @@ async def jm(order, option, group_id, user_id):
         {
             'type': 'at',
             'data': {
-                'qq', user_id
+                'qq': str(user_id),
+                'name': '不见了'
             }
         },
         {
