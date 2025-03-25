@@ -11,6 +11,7 @@ state_now = 'battle'
 @app.post("/onebot")
 async def root(request: Request):
     global state_now
+    iftext = True
     data = await request.json()
     if 'raw_message' in data and data['raw_message'][0] == '/':
         group_id = data['group_id']
@@ -28,11 +29,13 @@ async def root(request: Request):
                 }
             else:
                 await state.state_dic[state_now](order, group_id, user_id)
+                iftext = False
         except Exception as e:
             print(e)
             text = {
                 'text': '参数错误'
             }
-        await message.send_msg(group_id, text)
+        if iftext:
+            await message.send_msg(group_id, text)
 if __name__ == "__main__":
     uvicorn.run(app, port=8070)
