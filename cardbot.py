@@ -27,7 +27,7 @@ async def root(request: Request):
                     'text': '当前状态为' + state_now
                 }
             else:
-                await state.state_dic[state_now](group_id, user_id, order)
+                await state.state_dic[state_now](order, group_id, user_id)
         except Exception as e:
             print(e)
             text = {
