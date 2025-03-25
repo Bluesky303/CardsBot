@@ -19,7 +19,7 @@ async def send_file(group_id, file, name):
                 'name': name,
             })
         
-def creat_text_msg(text):
+def create_text_msg(text):
     return {
         'type': 'text',
         'data': {
