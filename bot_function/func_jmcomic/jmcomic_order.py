@@ -5,10 +5,10 @@ async def jmcomic_order(order, group_id, user_id):
     option = jmcomic.create_option_by_file("./option.yml")
     
     try: 
-        if order[0] in jmcomic_dic:
-            jmcomic_dic = {
-                'jm': await jm(order, option),
-            }
+        jmcomic_dic = {
+            'jm': await jm(order, option),
+        }
+        if order[0] in jmcomic_dic:    
             text = jmcomic_dic[order[0]]
         else:
             text = {
