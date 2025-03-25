@@ -21,12 +21,16 @@ async def root(request: Request):
                 text = {
                     'text': '切换成功'
                 }
+            if order[0] == '状态':
+                text = {
+                    'text': '当前状态为' + state_now
+                }
             else:
                 await state.state_dic[state_now](group_id, user_id, order)
         except:
             text = {
                 'text': '参数错误'
             }
-        message.send_message(group_id, text)
+        message.send_msg(group_id, text)
 if __name__ == "__main__":
     uvicorn.run(app, port=8070)
