@@ -18,7 +18,7 @@ Pile = cards.CardPlie([card1]*5+[card2]*5)
 
 async def printPile(Piledata: tuple, group_id):
     text = {
-        'text': f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + Piledata[1][num] for num in len(Piledata[1])])
+        'text': f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + Piledata[1][num] for num in range(len(Piledata[1]))])
         }
     async with aiohttp.ClientSession() as session:
         reply = {
