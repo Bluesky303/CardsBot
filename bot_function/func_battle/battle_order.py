@@ -27,7 +27,8 @@ async def battle_order(order: list, group_id):
             text = {
                 'text': '指令错误'
             }
-    except:
+    except Exception as e:
+        print(e)
         text = {
             'text': '参数错误'
         }

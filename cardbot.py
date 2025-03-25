@@ -27,7 +27,8 @@ async def root(request: Request):
                 }
             else:
                 await state.state_dic[state_now](group_id, user_id, order)
-        except:
+        except Exception as e:
+            print(e)
             text = {
                 'text': '参数错误'
             }

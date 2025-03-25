@@ -14,7 +14,8 @@ async def jmcomic_order(order, group_id, user_id):
             text = {
                 'text': '指令错误'
             }
-    except:
+    except Exception as e:
+        print(e)
         text = {
             'text': '参数错误'
         }
