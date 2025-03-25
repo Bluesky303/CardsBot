@@ -1,3 +1,2 @@
-from .state import state_dic
+from .state import state_dic, switch_state, get_state
 from .message import send_msg
-from .state_switch import switch_state, get_state
