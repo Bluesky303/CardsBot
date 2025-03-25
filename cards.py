@@ -51,12 +51,14 @@ class CardPlie:
         return ('手牌', self.hand_pile)
         
     def discard(self, arg):
-        cardnum = int(cardnum)
+        intermidiate = []
+        bcardnum = 0
         for cardnum in arg:
+            cardnum = int(cardnum)
+            intermidiate += self.hand_pile[bcardnum:cardnum]
             self.discard_pile += [self.hand_pile[cardnum]]
-        for cardnum in arg:
-            self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
-            return ('手牌', self.hand_pile)
+            bcardnum = cardnum + 1    
+        return ('手牌', self.hand_pile)
         
     def search(self, arg):
         name = arg[0]
