@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request
 import aiohttp
 import cards
 
-from order import handle
+import order as ord
 
 app = FastAPI() 
 
@@ -36,7 +36,7 @@ async def root(request: Request):
     if 'raw_message' in data and data['raw_message'][0] == '/':
         group_id = data['group_id']
         order = data['raw_message'][1:].split(' ')
-        re = handle(Pile, order)
+        re = ord.handle(Pile, order)
         if re != None:
             await printPile(re, group_id)
         
