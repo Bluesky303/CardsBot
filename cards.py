@@ -22,19 +22,20 @@ class CardPlie:
         self.hand_pile = []
         self.exhausted_pile = []
     
-    def show_draw_pile(self):
+    def show_draw_pile(self, arg):
         return ('抽牌堆', sorted(self.draw_pile, key = lambda x: x.name))
     
-    def show_discard_pile(self):
+    def show_discard_pile(self, arg):
         return ('弃牌堆', self.discard_pile)
     
-    def show_hand_pile(self):
+    def show_hand_pile(self, arg):
         return ('手牌', self.hand_pile)
     
-    def show_exhausted_pile(self):
+    def show_exhausted_pile(self, arg):
         return ('被消耗的牌', self.exhausted_pile)
     
-    def draw(self, num):
+    def draw(self, arg):
+        num = arg[0]
         if len(self.draw_pile) < num:
             random.shuffle(self.discard_pile)
             self.draw_pile += self.discard_pile
@@ -42,18 +43,22 @@ class CardPlie:
         self.draw_pile = self.draw_pile[num:]
         return ('手牌', self.hand_pile)
     
-    def using(self, cardnum):
+    def using(self, arg):
+        cardnum = arg[0]
         self.hand_pile[cardnum].played()
         self.discard_pile += [self.hand_pile[cardnum]]
         self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
         return ('手牌', self.hand_pile)
         
-    def discard(self, cardnum):
-        self.discard_pile += [self.hand_pile[cardnum]]
-        self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
-        return ('手牌', self.hand_pile)
+    def discard(self, arg):
+        for cardnum in arg:
+            self.discard_pile += [self.hand_pile[cardnum]]
+        for cardnum in arg:
+            self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
+            return ('手牌', self.hand_pile)
         
-    def search(self, name):
+    def search(self, arg):
+        name = arg[0]
         temp_draw = []
         for i in range(len(self.draw_pile)):
             if self.draw_pile[i].name == name:
@@ -63,7 +68,8 @@ class CardPlie:
         self.hand_pile += [temp_draw[0][0]]
         return ('手牌', self.hand_pile)
     
-    def reclaim(self, name):
+    def reclaim(self, arg):
+        name = arg[0]
         for i in range(len(self.discard_pile)):
             if self.discard_pile[i].name == name:
                 self.draw_pile += [self.discard_pile[i]]
