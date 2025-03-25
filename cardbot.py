@@ -21,7 +21,7 @@ async def root(request: Request):
                 text = {
                     'text': '切换成功'
                 }
-            if order[0] == '状态':
+            elif order[0] == '状态':
                 text = {
                     'text': '当前状态为' + state_now
                 }
