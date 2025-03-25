@@ -1,4 +1,5 @@
 myenv/
 文档/
 character/
-__pycache__/
+**/__pycache__
+*.pyc

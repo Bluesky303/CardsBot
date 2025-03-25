@@ -1,1 +1,1 @@
-from battle_order import battle_order
+from .battle_order import battle_order

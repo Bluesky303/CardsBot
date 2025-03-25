@@ -1,4 +1,4 @@
-import cards
+from .cards import *
 from ..message import *
 
 battle_dic = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收']
@@ -39,8 +39,8 @@ def attack(damage):
 
 def defence(shield):
     return {'defence': shield}
-card1 = cards.Card('attack', 'attack', 1, attack(6))
-card2 = cards.Card('defence', 'defence', 2, defence(5))
-Pile = cards.CardPlie([card1]*5+[card2]*5)
+card1 = Card('attack', 'attack', 1, attack(6))
+card2 = Card('defence', 'defence', 2, defence(5))
+Pile = CardPlie([card1]*5+[card2]*5)
 
 
