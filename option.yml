@@ -1,0 +1,31 @@
+client:
+  cache: null
+  domain: []
+  impl: api
+  postman:
+    meta_data:
+      headers: null
+      impersonate: chrome110
+      proxies: {}
+    type: cffi
+  retry_times: 5
+dir_rule:
+  base_dir: C:\Users\Blue_sky303\Arepo\CardsBot\1
+  rule: Bd_Pname
+download:
+  cache: true
+  image:
+    decode: true
+    suffix: null
+  threading:
+    image: 30
+    photo: 32
+log: true
+plugins:
+  valid: log
+  after_photo:
+    - plugin: img2pdf
+      kwargs:
+        pdf_dir: C:\Users\Blue_sky303\Arepo\CardsBot\1\
+        filename_rule: Pid
+version: '2.1'
