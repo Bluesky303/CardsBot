@@ -3,10 +3,10 @@ from fastapi import FastAPI, Request
 
 import bot_function.state as state
 import bot_function.message as message
+from bot_function.state_switch import switch_state, get_state
 
 app = FastAPI() 
 
-state_now = ('cards', 'character')
 
 @app.post("/onebot")
 async def root(request: Request):
@@ -19,15 +19,15 @@ async def root(request: Request):
         order = data['raw_message'][1:].split(' ')
         try:
             if order[0] == '切换' and user_id == 506473613:
-                
-                state_now = tuple(order[1:])
-                text = [message.create_text_msg('切换成功')]
+
+                switch_state(tuple(order[1:]))
+                text = [message.create_text_msg('状态切换为: ' + ' '.join(order[1:]))]
                 
             elif order[0] == '状态':
-                text = [message.create_text_msg('当前状态为：' + state_now)]
+                text = [message.create_text_msg('当前状态为: ' + ' '.join(get_state()))]
                 
             else:
-                await state.state_dic[state_now](order, group_id, user_id)
+                await state.state_dic[get_state()](order, group_id, user_id)
                 iftext = False
                 
         except Exception as e:
