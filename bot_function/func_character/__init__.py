@@ -1,0 +1,1 @@
+from .character_order import character_order

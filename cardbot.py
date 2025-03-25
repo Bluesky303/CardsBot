@@ -1,22 +1,11 @@
 import uvicorn
 from fastapi import FastAPI, Request
-import aiohttp
-import cards
 
-import state
+import bot_function.state as state
+import bot_function.message as message
 
 app = FastAPI() 
 
-def attack(damage):
-    return {'attack': damage}
-
-def defence(shield):
-    return {'defence': shield}
-card1 = cards.Card('attack', 'attack', 1, attack(6))
-card2 = cards.Card('defence', 'defence', 2, defence(5))
-Pile = cards.CardPlie([card1]*5+[card2]*5)
-
-on_battle = True
 state_now = 'battle'
 
 @app.post("/onebot")
@@ -26,12 +15,18 @@ async def root(request: Request):
         group_id = data['group_id']
         user_id = data['user_id']
         order = data['raw_message'][1:].split(' ')
-        state_dic = {
-            'normal': state.character(order, group_id, user_id),
-            'battle': state.battle(Pile, order, group_id, user_id),
-            'jmcomic': state.jmcomic(order, group_id, user_id),
-        }
-        await state_dic[state_now]
-        
+        try:
+            if order[0] == '切换':
+                state_now = order[1]
+                text = {
+                    'text': '切换成功'
+                }
+            else:
+                await state.state_dic[state_now](group_id, user_id, order)
+        except:
+            text = {
+                'text': '参数错误'
+            }
+        message.send_message(group_id, text)
 if __name__ == "__main__":
     uvicorn.run(app, port=8070)

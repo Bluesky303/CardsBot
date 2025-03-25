@@ -1,6 +1,5 @@
-import aiohttp
 import jmcomic
-import message
+from ..message import *
 
 async def jmcomic_order(order, group_id, user_id):
     option = jmcomic.create_option_by_file("./option.yml")
@@ -19,7 +18,7 @@ async def jmcomic_order(order, group_id, user_id):
         text = {
             'text': '参数错误'
         }
-    await message.send_msg(group_id, text)
+    await send_msg(group_id, text)
 
 async def jm(order, option, group_id):
     pid = order[1]
@@ -27,7 +26,7 @@ async def jm(order, option, group_id):
     jmcomic.download_album(pid, option)
     
     file = f'file:///C:/Users/Blue_sky303/Arepo/CardsBot/1/{pid}.pdf'
-    await message.send_file(group_id, file, name=f'{pid}.pdf')
+    await send_file(group_id, file, name=f'{pid}.pdf')
     
     text = {
         'text': '下载完成'

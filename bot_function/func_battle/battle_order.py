@@ -1,10 +1,10 @@
 import cards
-import message
+from ..message import *
 
 battle_dic = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收']
 character_dic = ['角色列表', '使用角色', '新建角色', '删除角色', '角色信息', '修改角色属性']
 
-async def battle_order(Pile: cards.CardPlie, order: list, group_id):
+async def battle_order(order: list, group_id):
     battle_dic = {
         '抽牌堆': Pile.show_draw_pile,
         '手牌': Pile.show_hand_pile,
@@ -32,6 +32,15 @@ async def battle_order(Pile: cards.CardPlie, order: list, group_id):
             'text': '参数错误'
         }
     
-    await message.send_msg(group_id, text)
+    await send_msg(group_id, text)
+    
+def attack(damage):
+    return {'attack': damage}
+
+def defence(shield):
+    return {'defence': shield}
+card1 = cards.Card('attack', 'attack', 1, attack(6))
+card2 = cards.Card('defence', 'defence', 2, defence(5))
+Pile = cards.CardPlie([card1]*5+[card2]*5)
 
 
