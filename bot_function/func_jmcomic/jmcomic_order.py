@@ -6,7 +6,7 @@ async def jmcomic_order(order, group_id, user_id):
     
     try: 
         jmcomic_dic = {
-            'jm': await jm(order, option),
+            'jm': await jm(order, option, group_id),
         }
         if order[0] in jmcomic_dic:    
             text = jmcomic_dic[order[0]]
