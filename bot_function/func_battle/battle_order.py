@@ -4,7 +4,7 @@ from ..message import *
 battle_dic = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收']
 character_dic = ['角色列表', '使用角色', '新建角色', '删除角色', '角色信息', '修改角色属性']
 
-async def battle_order(order: list, group_id):
+async def battle_order(order: list, group_id, user_id):
     battle_dic = {
         '抽牌堆': Pile.show_draw_pile,
         '手牌': Pile.show_hand_pile,
