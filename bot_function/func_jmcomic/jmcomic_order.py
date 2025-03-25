@@ -25,14 +25,5 @@ async def jm(order, option, group_id, user_id):
     file = f'file:///C:/Users/Blue_sky303/Arepo/CardsBot/1/{pid}.pdf'
     await send_file(group_id, file, name=f'{pid}.pdf')
     
-    text = [
-        {
-            'type': 'at',
-            'data': {
-                'qq': str(user_id),
-                'name': '不见了'
-            }
-        },
-        create_text_msg('下载完成')
-    ]
+    text = [at_user(user_id), create_text_msg('下载完成')]
     return text

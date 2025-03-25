@@ -26,3 +26,12 @@ def create_text_msg(text):
             'text': text
         }
     }
+
+def at_user(user_id):
+    return {
+        'type': 'at',
+        'data': {
+           'qq': user_id,
+           'name': '不见了'
+        }
+    }

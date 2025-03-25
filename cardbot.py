@@ -6,6 +6,7 @@ import bot_function.message as message
 
 app = FastAPI() 
 
+Characters = {}
 
 @app.post("/onebot")
 async def root(request: Request):

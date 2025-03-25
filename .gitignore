@@ -1,5 +1,5 @@
 myenv/
 文档/
-character/
 **/__pycache__
 *.pyc
+init_default_character.py

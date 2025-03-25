@@ -1,11 +1,11 @@
 import random
 
 class Card:
-    def __init__(self, name, type, value, func):
-        self.name = name
-        self.type = type
-        self.value = value
-        self.func = func
+    def __init__(self, dic):
+        self.name = dic['name']
+        self.type = dic['type']
+        self.value = dic['value']
+        self.func = dic['func']
     
     def played(self):
         self.func
@@ -14,7 +14,7 @@ class Card:
     def draw(self):
         pass
     
-class CardPlie:
+class CardPile:
     def __init__(self, cards):
         random.shuffle(cards)
         self.draw_pile = cards
