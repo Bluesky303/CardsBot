@@ -35,7 +35,7 @@ class CardPlie:
         return ('被消耗的牌', self.exhausted_pile)
     
     def draw(self, arg):
-        num = arg[0]
+        num = int(arg[0])
         if len(self.draw_pile) < num:
             random.shuffle(self.discard_pile)
             self.draw_pile += self.discard_pile
@@ -44,13 +44,14 @@ class CardPlie:
         return ('手牌', self.hand_pile)
     
     def using(self, arg):
-        cardnum = arg[0]
+        cardnum = int(arg[0])
         self.hand_pile[cardnum].played()
         self.discard_pile += [self.hand_pile[cardnum]]
         self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
         return ('手牌', self.hand_pile)
         
     def discard(self, arg):
+        cardnum = int(cardnum)
         for cardnum in arg:
             self.discard_pile += [self.hand_pile[cardnum]]
         for cardnum in arg:
