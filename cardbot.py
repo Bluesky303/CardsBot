@@ -17,7 +17,7 @@ async def root(request: Request):
         user_id = data['user_id']
         order = data['raw_message'][1:].split(' ')
         try:
-            if order[0] == '切换' and user_id == '506473613':
+            if order[0] == '切换' and user_id == 506473613:
                 state_now = order[1]
                 text = {
                     'text': '切换成功'
