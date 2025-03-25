@@ -29,23 +29,27 @@ async def battle_order(Pile: cards.CardPlie, order: list, group_id):
         '搜寻': Pile.search,
         '回收': Pile.reclaim,
     }
-    
-    Piledata = battle_dic[order[0]](order[1:])
    
     try:
-        text = {
-            'text': f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + Piledata[1][num].name for num in range(len(Piledata[1]))])
-        }
+        if order[0] in battle_dic:
+            Piledata = battle_dic[order[0]](order[1:])
+            text = {
+                'text': f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + Piledata[1][num].name for num in range(len(Piledata[1]))])
+            }
+        else:
+            text = {
+                'text': '指令错误'
+            }
     except:
         text = {
-            'text': '指令错误'
+            'text': '参数错误'
         }
     
     await send_msg(group_id, text)
 
 
 
-def character_order():
+def normal_order():
     character_dic = {
         '角色列表': ''
     }
