@@ -20,21 +20,36 @@ async def root(request: Request):
         try:
             if order[0] == '切换' and user_id == 506473613:
                 state_now = order[1]
-                text = {
-                    'text': '切换成功'
-                }
+                text = [{
+            'type': 'at',
+            'data': {
+                'qq', user_id
+            }
+        },{
+                    'type': 'text',
+                    'data': {
+                        'text': '切换成功'
+                    }
+                }]
             elif order[0] == '状态':
-                text = {
-                    'text': '当前状态为' + state_now
-                }
+                text = [{
+                    'type': 'text',
+                    'data': {
+                        'text': '当前状态为' + state_now
+                    }
+                }]
+                    
             else:
                 await state.state_dic[state_now](order, group_id, user_id)
                 iftext = False
         except Exception as e:
             print(e)
-            text = {
-                'text': '参数错误'
-            }
+            text = [{
+                'type': 'text',
+                'data': {
+                    'text': '参数错误'
+                }
+            }]
         if iftext:
             await message.send_msg(group_id, text)
 if __name__ == "__main__":

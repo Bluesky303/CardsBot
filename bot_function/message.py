@@ -6,10 +6,7 @@ async def send_msg(group_id, text):
             'http://localhost:3000/send_group_msg', 
             json = {
                 'group_id': group_id,
-                'message': [{
-                    'type': 'text',
-                    'data': text
-                }]
+                'message': text
             })
 
 async def send_file(group_id, file, name):
