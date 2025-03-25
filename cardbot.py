@@ -23,7 +23,7 @@ async def root(request: Request):
         group_id = data['group_id']
         order = data['raw_message'][1:].split(' ')
         
-        ord.battle_order(Pile, order, group_id)
+        await ord.battle_order(Pile, order, group_id)
         
 if __name__ == "__main__":
     uvicorn.run(app, port=8070)
