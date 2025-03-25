@@ -9,7 +9,7 @@ async def jmcomic_order(order, group_id, user_id):
             jmcomic_dic = {
                 'jm': await jm(order, option),
             }
-            await text = jmcomic_dic[order[0]]
+            text = jmcomic_dic[order[0]]
         else:
             text = {
                 'text': '指令错误'
