@@ -10,7 +10,7 @@ client:
     type: cffi
   retry_times: 5
 dir_rule:
-  base_dir: C:\Users\Blue_sky303\Arepo\CardsBot\other\1
+  base_dir: C:\Users\Blue_sky303\Arepo\CardsBot\1
   rule: Bd_Pname
 download:
   cache: true
@@ -26,6 +26,6 @@ plugins:
   after_photo:
     - plugin: img2pdf
       kwargs:
-        pdf_dir: C:\Users\Blue_sky303\Arepo\CardsBot\other\1\
+        pdf_dir: C:\Users\Blue_sky303\Arepo\CardsBot\1\
         filename_rule: Pid
 version: '2.1'

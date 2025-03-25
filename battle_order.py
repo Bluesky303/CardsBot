@@ -1,21 +1,8 @@
 import cards
-import character
-
-import aiohttp
+import message
 
 battle_dic = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收']
 character_dic = ['角色列表', '使用角色', '新建角色', '删除角色', '角色信息', '修改角色属性']
-
-async def send_msg(group_id, text):
-    async with aiohttp.ClientSession() as session:
-        reply = {
-            'group_id': group_id,
-            'message': [{
-                'type': 'text',
-                'data': text
-            }]
-        }
-        await session.post('http://localhost:3000/send_group_msg', json=reply)
 
 async def battle_order(Pile: cards.CardPlie, order: list, group_id):
     battle_dic = {
@@ -45,12 +32,6 @@ async def battle_order(Pile: cards.CardPlie, order: list, group_id):
             'text': '参数错误'
         }
     
-    await send_msg(group_id, text)
+    await message.send_msg(group_id, text)
 
 
-
-def normal_order():
-    character_dic = {
-        '角色列表': ''
-    }
-    
