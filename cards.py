@@ -58,7 +58,7 @@ class CardPlie:
             intermidiate += self.hand_pile[bcardnum:cardnum]
             self.discard_pile += [self.hand_pile[cardnum]]
             bcardnum = cardnum + 1    
-        self.hand_pile = self.hand_pile[:bcardnum] + intermidiate
+        self.hand_pile = intermidiate + self.hand_pile[bcardnum:]
         return ('手牌', self.hand_pile)
         
     def search(self, arg):
