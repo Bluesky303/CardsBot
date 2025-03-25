@@ -10,13 +10,14 @@ state_now = 'battle'
 
 @app.post("/onebot")
 async def root(request: Request):
+    global state_now
     data = await request.json()
     if 'raw_message' in data and data['raw_message'][0] == '/':
         group_id = data['group_id']
         user_id = data['user_id']
         order = data['raw_message'][1:].split(' ')
         try:
-            if order[0] == '切换':
+            if order[0] == '切换' and user_id == '506473613':
                 state_now = order[1]
                 text = {
                     'text': '切换成功'
