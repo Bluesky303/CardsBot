@@ -1,9 +1,7 @@
-import bot_function.func_battle, bot_function.func_character, bot_function.func_jmcomic
+import bot_function.func_cards, bot_function.func_jmcomic
 
 state_dic = {
-    'normal': bot_function.func_character.character_order,
-    'battle':  bot_function.func_battle.battle_order,
-    'jmcomic': bot_function.func_jmcomic.jmcomic_order
+    ('cards', 'character'): bot_function.func_cards.character_order,
+    ('cards', 'battle'):  bot_function.func_cards.battle_order,
+    ('jmcomic'): bot_function.func_jmcomic.jmcomic_order
 }
-
-    

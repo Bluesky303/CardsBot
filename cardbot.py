@@ -6,7 +6,7 @@ import bot_function.message as message
 
 app = FastAPI() 
 
-state_now = 'battle'
+state_now = ('cards', 'character')
 
 @app.post("/onebot")
 async def root(request: Request):
@@ -19,39 +19,23 @@ async def root(request: Request):
         order = data['raw_message'][1:].split(' ')
         try:
             if order[0] == '切换' and user_id == 506473613:
-                state_now = order[1]
-                text = [{
-            'type': 'at',
-            'data': {
-                'qq': str(user_id),
-                'name': '不见了'
-            }
-        },{
-                    'type': 'text',
-                    'data': {
-                        'text': '切换成功'
-                    }
-                }]
+                
+                state_now = tuple(order[1:])
+                text = [message.create_text_msg('切换成功')]
+                
             elif order[0] == '状态':
-                text = [{
-                    'type': 'text',
-                    'data': {
-                        'text': '当前状态为' + state_now
-                    }
-                }]
-                    
+                text = [message.create_text_msg('当前状态为：' + state_now)]
+                
             else:
                 await state.state_dic[state_now](order, group_id, user_id)
                 iftext = False
+                
         except Exception as e:
             print(e)
-            text = [{
-                'type': 'text',
-                'data': {
-                    'text': '参数错误'
-                }
-            }]
+            text = [message.create_text_msg('指令错误')]
+            
         if iftext:
             await message.send_msg(group_id, text)
+
 if __name__ == "__main__":
     uvicorn.run(app, port=8070)

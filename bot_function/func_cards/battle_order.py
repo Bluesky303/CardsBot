@@ -20,18 +20,12 @@ async def battle_order(order: list, group_id, user_id):
     try:
         if order[0] in battle_dic:
             Piledata = battle_dic[order[0]](order[1:])
-            text = {
-                'text': f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + Piledata[1][num].name for num in range(len(Piledata[1]))])
-            }
+            text = [create_text_msg(f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num].name for num in range(len(Piledata[1]))]))]
         else:
-            text = {
-                'text': '指令错误'
-            }
+            text = [create_text_msg('指令错误')]
     except Exception as e:
         print(e)
-        text = {
-            'text': '参数错误'
-        }
+        text = [create_text_msg('参数错误')]
     
     await send_msg(group_id, text)
     
