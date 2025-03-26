@@ -10,6 +10,10 @@ character_dic = ['角色列表', '使用角色', '新建角色', '删除角色',
 if not os.path.exists("./character"):
     os.mkdir("./character")
 
+def tabjoin(l):
+    return tabjoin(l)
+
+
 class Character:
     async def __init__(self, group_id, user_id):
         self.group_id = group_id
@@ -52,15 +56,15 @@ class Character:
             MP: {self.character['mp']} 
             体力: {self.character['sp']}
         效果: 
-            {'\n    '.join([f'{key}: {value}' for key, value in self.character['state']['effect'].items()])}
+            {tabjoin([f'{key}: {value}' for key, value in self.character['state']['effect'].items()])}
         属性:
-            {'\n    '.join([f'{key}: {value}' for key, value in self.character['attr'].items()])}
+            {tabjoin([f'{key}: {value}' for key, value in self.character['attr'].items()])}
         能力:
-            {'\n    '.join([f'{key}: {value['text']}' for key, value in self.character['ability'].items()])}
+            {tabjoin([f'{key}: {value['text']}' for key, value in self.character['ability'].items()])}
         固有技能:
-            {'\n    '.join([f'{key}: {value['text']}' for key, value in self.character['innate'].items()])}
+            {tabjoin([f'{key}: {value['text']}' for key, value in self.character['innate'].items()])}
         卡组:
-            {'\n    '.join([f'{value}张{key}' for key, value in self.character['cards'].items()])}
+            {tabjoin([f'{value}张{key}' for key, value in self.character['cards'].items()])}
         '''
      
     def create_character(self, arg):
