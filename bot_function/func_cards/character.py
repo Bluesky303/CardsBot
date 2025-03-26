@@ -25,14 +25,10 @@ class Character:
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8'))
         if self.dic['now'] == None:
-            asyncio.run(self.async_init())
             self.character = None
             self.cardpile = None
         else:
             self.switch_character(self.dic['now'])
-    
-    async def async_init(self):
-        send_msg(self.group_id, [at_user(self.user_id), create_text_msg('当前没有角色')])
             
     def switch_character(self, arg):
         if len(arg) == 0: return '请输入参数'
