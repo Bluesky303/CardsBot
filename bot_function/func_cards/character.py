@@ -25,7 +25,6 @@ class Character:
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8'))
         self.character = {}
-        print(self.dic)
         if self.dic['now'] == None:
             self.character = None
             self.cardpile = None
@@ -79,6 +78,7 @@ class Character:
         os.mkdir(self.path + arg[0])
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
+        self.character['name'] = arg[0]
         text2 = self.show_now_character()
         self.save()
         return text1 + '\n' + text2
