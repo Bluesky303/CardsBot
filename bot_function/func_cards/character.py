@@ -73,7 +73,7 @@ class Character:
         if arg[0] in self.dic['list']: return '角色已存在'
         self.dic['list'].append(arg[0])
         os.mkdir(self.path + arg[0])
-        os.system(f'cp ./character/default_character {self.path}{arg[0]}/')
+        os.system(f'cp ./character/default_character.json {self.path}{arg[0]}/'.replace('/', '\\'))
         text1 = self.switch_character(arg)
         text2 = self.show_now_character([])
         return text1 + '\n' + text2
