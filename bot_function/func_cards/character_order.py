@@ -5,7 +5,7 @@ from .character import *
 async def character_order(order, group_id, user_id):
     character_dic = ['角色状态', '角色列表', '创建角色', '切换角色', '删除角色', '修改角色属性']
     if order[0] in character_dic:
-        P = await Character(group_id, user_id)
+        P = Character(group_id, user_id)
     else:
         return [create_text_msg('指令错误')]
     character_dic = {
