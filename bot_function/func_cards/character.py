@@ -11,7 +11,7 @@ if not os.path.exists("./character"):
     os.mkdir("./character")
 
 class Character:
-    def __init__(self, group_id, user_id):
+    async def __init__(self, group_id, user_id):
         self.group_id = group_id
         self.user_id = user_id
         self.path = f"./character/{user_id}/"
@@ -20,7 +20,7 @@ class Character:
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8'))
         if self.dic['now'] == None:
-            send_msg(group_id, [at_user(user_id), create_text_msg('当前没有角色')])
+            await send_msg(group_id, [at_user(user_id), create_text_msg('当前没有角色')])
             self.character = None
             self.cardpile = None
         else:
@@ -35,7 +35,7 @@ class Character:
         for card in self.character['cards']:
             p += [json.load(open(self.path + self.dic['now'] + '/' + card + '.json'))] * self.character['cards'][card]
         self.cardpile = CardPile(p)
-        send_msg(self.group_id, [at_user(self.user_id), create_text_msg('当前角色为' + self.dic['now'])])
+        return '当前角色为' + self.dic['now']
     
     def save(self):
         json.dump(self.character, open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'w', encoding='utf-8'))
@@ -69,5 +69,6 @@ class Character:
         self.dic['list'].append(arg[0])
         os.mkdir(self.path + arg[0])
         os.system(f'cp ./character/default_character {self.path}{arg[0]}/')
-        self.switch_character(arg[0])
-        self.show_now_character([])
+        text1 = self.switch_character(arg[0])
+        text2 = self.show_now_character([])
+        return text1 + '\n' + text2

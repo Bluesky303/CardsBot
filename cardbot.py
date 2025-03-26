@@ -10,6 +10,7 @@ Characters = {}
 
 @app.post("/onebot")
 async def root(request: Request):
+    global Characters
     iftext = True
     data = await request.json()
     if 'raw_message' in data and data['raw_message'][0] == '/':
