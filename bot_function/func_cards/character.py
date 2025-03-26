@@ -12,7 +12,7 @@ if not os.path.exists("./character"):
     os.mkdir("./character")
 
 def tabjoin(l):
-    return tabjoin(l)
+    return '\n    '.join(l)
 
 
 class Character:
@@ -48,8 +48,9 @@ class Character:
     def show_character_list(self, arg):
         return ' '.join(self.dic['list'])
     
-    def show_now_character(self, arg):
-        if self.character == None: return '当前没有角色'
+    def show_now_character(self, arg=[]):
+        if self.character == None: 
+            return '当前没有角色'
         return f'''
             角色姓名: {self.character['name']} 
             状态: 
@@ -75,8 +76,6 @@ class Character:
         os.mkdir(self.path + arg[0])
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
-        print(text1)
-        text2 = self.show_now_character([])
-        print(text2)
+        text2 = self.show_now_character()
         self.save()
         return text1 + '\n' + text2
