@@ -24,32 +24,35 @@ class Character:
             os.mkdir(self.path)
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8'))
-        if self.dic['now'] == None:
+        self.character = self.dic['now']
+        if self.character == None:
             self.character = None
             self.cardpile = None
         else:
-            self.switch_character(self.dic['now'])
+            self.switch_character(self.character)
             
     def switch_character(self, arg):
         if len(arg) == 0: return '请输入参数'
         if arg[0] not in self.dic['list']: return '角色不存在'
-        self.dic['now'] = arg[0]
-        self.character = json.load(open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'r', encoding='utf-8'))
+        self.character = arg[0]
+        self.character = json.load(open(self.path + self.character + '/' + self.character + '.json', 'r', encoding='utf-8'))
         p = []
         for card in self.character['cards']:
-            p += [json.load(open(self.path + self.dic['now'] + '/' + card + '.json'))] * self.character['cards'][card]
+            p += [json.load(open(self.path + self.character + '/' + card + '.json'))] * self.character['cards'][card]
         self.cardpile = CardPile(p)
-        return '当前角色为' + self.dic['now']
+        return '当前角色为' + self.character
     
     def save(self):
-        json.dump(self.character, open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'w', encoding='utf-8'))
+        json.dump(self.character, open(self.path + self.character + '/' + self.character + '.json', 'w', encoding='utf-8'))
         json.dump(self.dic, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
     
     def show_character_list(self, arg):
+        if self.dic['list'] == []: return '当前没有角色'
         return ' '.join(self.dic['list'])
     
     def show_now_character(self, arg):
-        text =  f'''
+        if self.character == None: return '当前没有角色'
+        return f'''
             角色姓名: {self.character['name']} 
             状态: 
                 HP: {self.character['hp']} 
@@ -66,8 +69,6 @@ class Character:
             卡组:
                 {tabjoin([f'{value}张{key}' for key, value in self.character['cards'].items()])}
         '''
-        print(text)
-        return text
      
     def create_character(self, arg):
         if len(arg) == 0: return '请输入参数'
