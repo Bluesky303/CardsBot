@@ -49,23 +49,25 @@ class Character:
         return ' '.join(self.dic['list'])
     
     def show_now_character(self, arg):
-        return f'''
-        角色姓名: {self.character['name']} 
-        状态: 
-            HP: {self.character['hp']} 
-            MP: {self.character['mp']} 
-            体力: {self.character['sp']}
-        效果: 
-            {tabjoin([key + ':' + value for key, value in self.character['state']['effect'].items()])}
-        属性:
-            {tabjoin([key + ':' + value for key, value in self.character['attr'].items()])}
-        能力:
-            {tabjoin([key + ':' + value['text'] for key, value in self.character['ability'].items()])}
-        固有技能:
-            {tabjoin([key + ':' + value['text'] for key, value in self.character['innate'].items()])}
-        卡组:
-            {tabjoin([f'{value}张{key}' for key, value in self.character['cards'].items()])}
+        text =  f'''
+            角色姓名: {self.character['name']} 
+            状态: 
+                HP: {self.character['hp']} 
+                MP: {self.character['mp']} 
+                体力: {self.character['sp']}
+            效果: 
+                {tabjoin([key + ':' + value for key, value in self.character['state']['effect'].items()])}
+            属性:
+                {tabjoin([key + ':' + value for key, value in self.character['attr'].items()])}
+            能力:
+                {tabjoin([key + ':' + value['text'] for key, value in self.character['ability'].items()])}
+            固有技能:
+                {tabjoin([key + ':' + value['text'] for key, value in self.character['innate'].items()])}
+            卡组:
+                {tabjoin([f'{value}张{key}' for key, value in self.character['cards'].items()])}
         '''
+        print(text)
+        return text
      
     def create_character(self, arg):
         if len(arg) == 0: return '请输入参数'
