@@ -58,9 +58,9 @@ class Character:
                 MP: {self.character['state']['mp']} 
                 体力: {self.character['state']['sp']}
             效果: 
-                {tabjoin([key + ':' + value for key, value in self.character['state']['effect'].items()])}
+                {tabjoin([key + ':' + str(value) for key, value in self.character['state']['effect'].items()])}
             属性:
-                {tabjoin([key + ':' + value for key, value in self.character['attr'].items()])}
+                {tabjoin([key + ':' + str(value) for key, value in self.character['attr'].items()])}
             能力:
                 {tabjoin([key + ':' + value['text'] for key, value in self.character['ability'].items()])}
             固有技能:
