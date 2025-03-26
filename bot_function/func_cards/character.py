@@ -74,6 +74,7 @@ class Character:
         if len(arg) == 0: return '请输入参数'
         if arg[0] in self.dic['list']: return '角色已存在'
         self.dic['list'].append(arg[0])
+        print(self.dic['list'])
         os.mkdir(self.path + arg[0])
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/'.replace('/', '\\'))
         text1 = self.switch_character(arg[0])
