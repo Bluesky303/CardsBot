@@ -31,8 +31,18 @@ def attack(damage):
 
 def defence(shield):
     return {'defence': shield}
-card1 = Card('attack', 'attack', 1, attack(6))
-card2 = Card('defence', 'defence', 2, defence(5))
+card1 = Card({
+    'name': 'attack',
+    'type': 'attack',
+    'value': 1, 
+    'func': attack(6)
+    })
+card2 = Card({
+    'name': 'defence',
+    'type': 'defence',
+    'value': 2, 
+    'func': defence(6)
+    })
 Pile = CardPile([card1]*5+[card2]*5)
 
 
