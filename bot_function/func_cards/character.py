@@ -15,7 +15,7 @@ def tabjoin(l):
 
 
 class Character:
-    async def __init__(self, group_id, user_id):
+    def __init__(self, group_id, user_id):
         self.group_id = group_id
         self.user_id = user_id
         self.path = f"./character/{user_id}/"
@@ -24,7 +24,7 @@ class Character:
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8'))
         if self.dic['now'] == None:
-            await send_msg(group_id, [at_user(user_id), create_text_msg('当前没有角色')])
+            send_msg(group_id, [at_user(user_id), create_text_msg('当前没有角色')])
             self.character = None
             self.cardpile = None
         else:
