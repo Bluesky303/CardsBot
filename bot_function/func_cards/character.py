@@ -36,7 +36,6 @@ class Character:
         if arg[0] not in self.dic['list']: return '角色不存在'
         self.dic['now'] = arg[0]
         self.character = json.load(open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'r', encoding='utf-8'))
-        print(self.character)
         #p = []
         #for card in self.character['cards']:
         #    p += [json.load(open(self.path + self.dic['now'] + '/' + card + '.json'))] * self.character['cards'][card]
@@ -54,7 +53,7 @@ class Character:
         if self.character == None: 
             return '当前没有角色'
         return f'''
-角色姓名: {1} 
+角色姓名: {self.character['name']} 
 状态: 
     HP: {self.character['state']['hp']} 
     MP: {self.character['state']['mp']} 
@@ -66,7 +65,7 @@ class Character:
 能力:
     {tabjoin([key + ':' + value['text'] for key, value in self.character['ability'].items()])}
 固有技能:
-    {tabjoin([key + ':' + value['text'] for key, value in self.character['innate'].items()])}
+    {tabjoin([key + ':' + ['text'] for key, value in self.character['innate'].items()])}
 卡组:
     {tabjoin([f'{value}张{key}' for key, value in self.character['cards'].items()])}
 '''
@@ -79,6 +78,7 @@ class Character:
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
         self.character['name'] = arg[0]
+        print(self.character)
         text2 = self.show_now_character()
         self.save()
         return text1 + '\n' + text2
