@@ -4,6 +4,7 @@ from ..message import *
 import json
 import os
 
+import asyncio
 
 character_dic = ['角色列表', '使用角色', '新建角色', '删除角色', '角色信息', '修改角色属性']
 
@@ -24,11 +25,14 @@ class Character:
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8'))
         if self.dic['now'] == None:
-            send_msg(group_id, [at_user(user_id), create_text_msg('当前没有角色')])
+            asyncio.run(self.async_init())
             self.character = None
             self.cardpile = None
         else:
             self.switch_character(self.dic['now'])
+    
+    async def async_init(self):
+        send_msg(self.group_id, [at_user(self.user_id), create_text_msg('当前没有角色')])
             
     def switch_character(self, arg):
         if len(arg) == 0: return '请输入参数'
