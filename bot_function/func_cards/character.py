@@ -35,6 +35,7 @@ class Character:
         if arg[0] not in self.dic['list']: return '角色不存在'
         self.dic['now'] = arg[0]
         self.character = json.load(open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'r', encoding='utf-8'))
+        print(self.character)
         #p = []
         #for card in self.character['cards']:
         #    p += [json.load(open(self.path + self.dic['now'] + '/' + card + '.json'))] * self.character['cards'][card]
