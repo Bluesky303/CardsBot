@@ -77,7 +77,6 @@ class Character:
         os.mkdir(self.path + arg[0])
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
-        self.character['name'] = arg[0]
         print(self.character)
         text2 = self.show_now_character()
         self.save()
