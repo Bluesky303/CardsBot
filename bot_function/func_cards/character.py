@@ -29,6 +29,7 @@ class Character:
             self.character = None
             self.cardpile = None
         else:
+            print(1)
             self.switch_character(self.dic['now'])
             
     def switch_character(self, arg):
