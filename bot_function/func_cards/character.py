@@ -54,7 +54,7 @@ class Character:
         if self.character == None: 
             return '当前没有角色'
         return f'''
-角色姓名: {self.character['name']} 
+角色姓名: {1} 
 状态: 
     HP: {self.character['state']['hp']} 
     MP: {self.character['state']['mp']} 
