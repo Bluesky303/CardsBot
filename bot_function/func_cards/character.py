@@ -50,6 +50,7 @@ class Character:
         return ' '.join(self.dic['list'])
     
     def show_now_character(self, arg=[]):
+        print(self.character)
         if self.character == None: 
             return '当前没有角色'
         return f'''
@@ -77,7 +78,6 @@ class Character:
         os.mkdir(self.path + arg[0])
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
-        print(self.character)
         text2 = self.show_now_character()
         self.save()
         return text1 + '\n' + text2
