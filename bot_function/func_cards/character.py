@@ -24,6 +24,7 @@ class Character:
             os.mkdir(self.path)
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8'))
+        print(self.dic)
         if self.dic['now'] == None:
             self.character = None
             self.cardpile = None
