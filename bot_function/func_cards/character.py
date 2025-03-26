@@ -24,30 +24,28 @@ class Character:
             os.mkdir(self.path)
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8'))
-        self.character = self.dic['now']
-        if self.character == None:
+        if self.dic['now'] == None:
             self.character = None
             self.cardpile = None
         else:
-            self.switch_character(self.character)
+            self.switch_character(self.dic['now'])
             
     def switch_character(self, arg):
         if len(arg) == 0: return '请输入参数'
         if arg[0] not in self.dic['list']: return '角色不存在'
-        self.character = arg[0]
-        self.character = json.load(open(self.path + self.character + '/' + self.character + '.json', 'r', encoding='utf-8'))
-        p = []
-        for card in self.character['cards']:
-            p += [json.load(open(self.path + self.character + '/' + card + '.json'))] * self.character['cards'][card]
-        self.cardpile = CardPile(p)
-        return '当前角色为' + self.character
+        self.dic['now'] = arg[0]
+        self.character = json.load(open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'r', encoding='utf-8'))
+        #p = []
+        #for card in self.character['cards']:
+        #    p += [json.load(open(self.path + self.dic['now'] + '/' + card + '.json'))] * self.character['cards'][card]
+        #self.cardpile = CardPile(p)
+        return '当前角色为' + self.dic['now']
     
     def save(self):
-        json.dump(self.character, open(self.path + self.character + '/' + self.character + '.json', 'w', encoding='utf-8'))
+        json.dump(self.character, open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'w', encoding='utf-8'))
         json.dump(self.dic, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
     
     def show_character_list(self, arg):
-        if self.dic['list'] == []: return '当前没有角色'
         return ' '.join(self.dic['list'])
     
     def show_now_character(self, arg):
@@ -74,9 +72,8 @@ class Character:
         if len(arg) == 0: return '请输入参数'
         if arg[0] in self.dic['list']: return '角色已存在'
         self.dic['list'].append(arg[0])
-        print(self.dic['list'])
         os.mkdir(self.path + arg[0])
-        os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/'.replace('/', '\\'))
-        text1 = self.switch_character(arg[0])
+        os.system(f'cp ./character/default_character {self.path}{arg[0]}/')
+        text1 = self.switch_character(arg)
         text2 = self.show_now_character([])
         return text1 + '\n' + text2
