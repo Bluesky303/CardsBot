@@ -53,9 +53,9 @@ class Character:
         return f'''
             角色姓名: {self.character['name']} 
             状态: 
-                HP: {self.character['hp']} 
-                MP: {self.character['mp']} 
-                体力: {self.character['sp']}
+                HP: {self.character['state']['hp']} 
+                MP: {self.character['state']['mp']} 
+                体力: {self.character['state']['sp']}
             效果: 
                 {tabjoin([key + ':' + value for key, value in self.character['state']['effect'].items()])}
             属性:
@@ -76,4 +76,5 @@ class Character:
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
         text2 = self.show_now_character([])
+        self.save()
         return text1 + '\n' + text2
