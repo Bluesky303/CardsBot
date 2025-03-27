@@ -47,7 +47,7 @@ class Character:
         json.dump(self.dic, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
     
     def show_character_list(self, arg):
-        return ' '.join(self.dic['list'])
+        return '\n' + ' '.join(self.dic['list']) + f'\n当前角色：{self.dic["now"]}' 
     
     def show_now_character(self, arg=[]):
         print(self.character)
@@ -86,9 +86,10 @@ class Character:
     def modify_character_attr(self, arg):
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
-        if len(arg) % 2 != 0: return '参数错误'
+        if len(arg) % 2 != 0: return '参数数目错误'
+        dic = self.character['state'].update(self.character['attr'])
         for i in range(0, len(arg), 2):
-            if arg[i] not in self.character['state']+self.character['attr'] or arg[i] == 'effect' or not arg[i+1].isdigit(): return '参数错误'
+            if arg[i] not in dic or arg[i] == 'effect' or not arg[i+1].isdigit(): return '参数值错误'
             if arg[i] in self.character['state']:
                 self.character['state'][arg[i]] = int(arg[i+1])
             if arg[i] in self.character['attr']:
