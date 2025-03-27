@@ -82,3 +82,15 @@ class Character:
         text2 = self.show_now_character()
         self.save()
         return text1 + '\n' + text2
+    
+    def modify_character_attr(self, arg):
+        if self.character == None: return '当前没有角色'
+        if len(arg) == 0: return '请输入参数'
+        if len(arg) % 2 != 0: return '参数错误'
+        for i in range(0, len(arg), 2):
+            if arg[i] not in self.character['state']+self.character['attr'] or arg[i] == 'effect' or not arg[i+1].isdigit(): return '参数错误'
+            if arg[i] in self.character['state']:
+                self.character['state'][arg[i]] = int(arg[i+1])
+            if arg[i] in self.character['attr']:
+                self.character['attr'][arg[i]] = int(arg[i+1])
+            

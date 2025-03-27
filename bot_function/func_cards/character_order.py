@@ -12,6 +12,8 @@ async def character_order(order, group_id, user_id):
         '角色状态': P.show_now_character, 
         '角色列表': P.show_character_list,
         '创建角色': P.create_character,
+        '切换角色': P.switch_character,
+        '修改角色属性': P.modify_character,
     }
     
     try:
