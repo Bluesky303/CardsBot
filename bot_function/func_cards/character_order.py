@@ -3,7 +3,7 @@ from ..message import *
 from .character import *
 
 async def character_order(order, group_id, user_id):
-    character_dic = ['角色状态', '角色列表', '创建角色', '切换角色', '删除角色', '修改角色属性']
+    character_dic = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '删除角色']
     if order[0] in character_dic:
         P = Character(group_id, user_id)
     else:
@@ -13,7 +13,7 @@ async def character_order(order, group_id, user_id):
         '角色列表': P.show_character_list,
         '创建角色': P.create_character,
         '切换角色': P.switch_character,
-        '修改角色属性': P.modify_character,
+        '修改角色属性': P.modify_character_attr,
     }
     
     try:
