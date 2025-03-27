@@ -66,7 +66,7 @@ class Character:
 能力:
     {tabjoin([key + ':' + value['text'] for key, value in self.character['ability'].items()])}
 固有技能:
-    {tabjoin([key + ':' + ['text'] for key, value in self.character['innate'].items()])}
+    {tabjoin([key + ':' + value['text'] for key, value in self.character['innate'].items()])}
 卡组:
     {tabjoin([f'{value}张{key}' for key, value in self.character['cards'].items()])}
 '''
@@ -87,11 +87,12 @@ class Character:
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
         if len(arg) % 2 != 0: return '参数数目错误'
-        dic = self.character['state'].update(self.character['attr'])
         for i in range(0, len(arg), 2):
-            if arg[i] not in dic or arg[i] == 'effect' or not arg[i+1].isdigit(): return '参数值错误'
-            if arg[i] in self.character['state']:
-                self.character['state'][arg[i]] = int(arg[i+1])
-            if arg[i] in self.character['attr']:
-                self.character['attr'][arg[i]] = int(arg[i+1])
-            
+            if arg[i] == 'effect' or not arg[i+1].isdigit(): return '参数值错误'
+            else:
+                if arg[i] in self.character['state']:
+                    self.character['state'][arg[i]] = int(arg[i+1])
+                if arg[i] in self.character['attr']:
+                    self.character['attr'][arg[i]] = int(arg[i+1])
+        self.save()
+        return self.show_now_character()
