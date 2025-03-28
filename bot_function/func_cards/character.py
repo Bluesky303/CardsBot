@@ -87,12 +87,22 @@ class Character:
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
         if len(arg) % 2 != 0: return '参数数目错误'
+        def operation(a, b, c):
+            dic = {'+': a + b, '-': a - b, '=': b}
+            return dic[c]
         for i in range(0, len(arg), 2):
-            if arg[i] == 'effect' or not arg[i+1].isdigit(): return '参数值错误'
+            if arg[i] == 'effect' or not arg[i+1][1:].isdigit() or not arg[i+1][0] in ['+', '-', '=']: return '参数值错误'
             else:
                 if arg[i] in self.character['state']:
-                    self.character['state'][arg[i]] = int(arg[i+1])
+                    self.character['state'][arg[i]] = operation(self.character['state'][arg[i]], int(arg[i+1]), arg[i+1][0])
                 if arg[i] in self.character['attr']:
-                    self.character['attr'][arg[i]] = int(arg[i+1])
+                    self.character['attr'][arg[i]] = operation(self.character['attr'][arg[i]], int(arg[i+1]), arg[i+1][0])
         self.save()
         return self.show_now_character()
+    
+    def add_effect(self, arg):
+        if self.character == None: return '当前没有角色'
+        if len(arg) == 0: return '请输入参数'
+        if len(arg) % 2 != 0: return '参数数目错误'
+        for i in range(0, len(arg), 2):
+            pass
