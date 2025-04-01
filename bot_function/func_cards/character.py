@@ -94,7 +94,7 @@ class Character:
         if self.character == None: return '当前没有角色'
         
         show_list = ['状态', '效果', '详细效果', '属性', '能力', '详细能力', '固有技能', '详细固有', '卡组', '详细卡组']
-        show = ['状态', '效果', '属性']
+        show = ['卡组']
         # 处理参数
         # 参数:
         #   -仅显示 ..  表示仅显示选项内容，不更新self.show
@@ -221,5 +221,15 @@ class Character:
         self.save()
         return self.show_now_character()
 
-    def show_card_list(self, arg): # 显示存在的卡牌
-        pass
+    def add_card(self, arg): # 添加卡牌
+        if self.character == None: return '当前没有角色'
+        if len(arg) == 0: return '请输入参数'
+        if len(arg) % 2 != 0: return '参数数目错误'
+        for i in range(0, len(arg), 2):
+            if not arg[i][1:].isdigit(): return '参数值错误'
+            else:
+                self.character['cards'][arg[i]] = int(arg[i+1])
+        if sum(self.character['cards'].values()) < 15:
+            self.character['cards']['基础卡'] = 15 - sum(self.character['cards'].values())
+        self.save()
+        return self.show_now_character()
