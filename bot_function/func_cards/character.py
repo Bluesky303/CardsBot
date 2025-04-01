@@ -91,7 +91,7 @@ class Character:
                 for a in range(len(arg)):
                     if a in text_replace:
                         for b in text_replace[a]:
-                            content = value[arg[a]].replace(text_replace[a][b], value[text_replace[a][b]])
+                            content = value[arg[a]].replace(b, value[text_replace[a][b]])
                     else:
                         content = str(value[arg[a]])
                     format_text = format_text.replace(f'${a+1}', content)
