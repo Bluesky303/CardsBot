@@ -254,6 +254,6 @@ class Character:
         for i in del_list:
             del self.character['cards'][i]
         if sum(self.character['cards'].values()) - self.character['cards']['基础卡'] < 15:
-            self.character['cards']['基础卡'] = 15 - sum(self.character['cards'].values()) - self.character['cards']['基础卡']
+            self.character['cards']['基础卡'] = 15 - sum(self.character['cards'].values()) + self.character['cards']['基础卡']
         self.save()
         return self.show_now_character()
