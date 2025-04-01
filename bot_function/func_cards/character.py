@@ -59,6 +59,7 @@ class Character:
         '''
         json.dump(self.character, open(self.path + self.chracterlist['now'] + '/' + self.chracterlist['now'] + '.json', 'w', encoding='utf-8'))
         json.dump(self.chracterlist, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
+        json.dump(self.cards_list, open(self.path + self.chracterlist['now'] + '/' + 'cards_list.json', 'w', encoding='utf-8'))
 
     def switch_character(self, arg): # 切换角色
         '''
