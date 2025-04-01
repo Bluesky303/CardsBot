@@ -82,7 +82,7 @@ class Character:
         for key, value in self.character['cards'].items():
             Pile += [json.load(open(self.path + self.chracterlist['now'] + '/' + key + '.json', 'r', encoding='utf-8'))] * value
         self.Pile = CardPile(Pile)
-        if os.exists(self.path + self.chracterlist['now'] + '/' + 'battle.json'):
+        if os.path.exists(self.path + self.chracterlist['now'] + '/' + 'battle.json'):
             battle = json.load(open(self.path + self.chracterlist['now'] + '/' + 'battle.json', 'r', encoding='utf-8'))
             for key, value in battle.items():   
                 self.Pile.__dict__[key] = value
