@@ -148,11 +148,12 @@ class Character:
         else:
             if not arg[1][1:].isdigit() or not arg[1][0] == '=': return '参数值错误'
             new_effect['value'] = int(arg[1][1:])
+            print(arg)
             if len(arg) == 3:
                 new_effect['text'] = arg[2]
             else:
                 new_effect['text'] = ''
-        self.character['state']['effect'][arg[0]] = new_effect
+            self.character['state']['effect'][arg[0]] = new_effect
         self.save()
         return self.show_now_character()
             
