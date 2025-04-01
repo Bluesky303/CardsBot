@@ -287,4 +287,5 @@ class Character:
         return '战斗开始'
     
     def end_battle(self, arg = []): # 结束战斗
+        print(f'del {self.path}{self.characterlist["now"]}/battle.json'.replace('/', '\\'))
         os.system(f'del {self.path}{self.characterlist["now"]}/battle.json'.replace('/', '\\'))
