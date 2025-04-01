@@ -43,10 +43,10 @@ class Character:
             #   - 战斗信息.json
             os.mkdir(self.path)
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
-            # json.dump({'list': []}, open(self.path + 'cards_list.json', 'w', encoding='utf-8'))
+            json.dump({'list': []}, open(self.path + 'cards_list.json', 'w', encoding='utf-8'))
         self.chracterlist = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
         self.character = {} # 执行switch后保存当前角色信息
-        # self.cards_list = json.load(open(self.path + 'cards_list.json', 'r', encoding='utf-8')) # 获取卡牌列表
+        self.cards_list = json.load(open(self.path + 'cards_list.json', 'r', encoding='utf-8')) # 获取卡牌列表
         if self.chracterlist['now'] == None:
             self.character = None
         else:
@@ -159,6 +159,7 @@ class Character:
         self.chracterlist['list'].append(arg[0])
         os.mkdir(self.path + arg[0])
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
+        os.system(f'copy ./character/基础卡.json {self.path}{arg[0]}/基础卡.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
         self.character['name'] = arg[0]
         text2 = self.show_now_character()
@@ -221,10 +222,27 @@ class Character:
         self.save()
         return self.show_now_character()
 
+    def create_card(self, arg): # 新建卡牌
+        if self.character == None: return '当前没有角色'
+        if len(arg) == 0: return '请输入参数'
+        if arg[0] in self.character['cards']: return '卡牌已存在'
+        card = {'name': arg[0]}
+        if len(arg) == 2: card['attr'] = arg[1]
+        else: card['attr'] = ''
+        self.cards_list['list'].append(card)
+        json.dump(card, open(self.path + self.chracterlist['now'] + '/' + arg[0] + '.json', 'w', encoding='utf-8'))
+        self.save()
+        return self.show_now_character()
+    
+    def show_card_list(self, arg): # 显示卡牌列表
+        if self.character == None: return '当前没有角色'
+        return '\n' + ' '.join(self.cards_list['list'])
+    
     def add_card(self, arg): # 添加卡牌
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
         if len(arg) % 2 != 0: return '参数数目错误'
+        if not arg[0] in self.character['cards']: return '卡牌不存在'
         for i in range(0, len(arg), 2):
             if not arg[i+1].isdigit(): return '参数值错误'
             else:
@@ -235,7 +253,7 @@ class Character:
                 del_list.append(i)
         for i in del_list:
             del self.character['cards'][i]
-        if sum(self.character['cards'].values()) < 15:
-            self.character['cards']['基础卡'] = 15 - sum(self.character['cards'].values())
+        if sum(self.character['cards'].values()) - self.character['cards']['基础卡'] < 15:
+            self.character['cards']['基础卡'] = 15 - sum(self.character['cards'].values()) - self.character['cards']['基础卡']
         self.save()
         return self.show_now_character()

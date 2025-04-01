@@ -19,14 +19,7 @@ class Card:
                     'func': 效果函数 
                 }
         '''
-        
-
-    def played(self):
-        self.func
-        return self.type
-    
-    def draw(self):
-        pass
+        self.
     
 class CardPile:
     def __init__(self, cards):
