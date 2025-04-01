@@ -1,11 +1,15 @@
+'''
+角色相关指令，主要用于战斗外场景
+'''
+
 from .character import *
 from ..message import *
 from .character import *
 
 async def character_order(order, group_id, user_id):
-    character_dic = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '删除角色']
-    if order[0] in character_dic:
-        P = Character(group_id, user_id)
+    character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '删除角色']
+    if order[0] in character_dic_list:
+        P = Character(group_id, user_id) # 从文件创建角色并及时保存保证可中断
     else:
         return [create_text_msg('指令错误')]
     character_dic = {

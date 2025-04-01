@@ -1,3 +1,7 @@
+'''
+卡牌和牌堆类
+'''
+
 import random
 
 class Card:
