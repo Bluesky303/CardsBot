@@ -242,7 +242,7 @@ class Character:
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
         if len(arg) % 2 != 0: return '参数数目错误'
-        if not arg[0] in self.character['cards']: return '卡牌不存在'
+        if not arg[0] in self.cards_list['list']: return '卡牌不存在'
         for i in range(0, len(arg), 2):
             if not arg[i+1].isdigit(): return '参数值错误'
             else:
