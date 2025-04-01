@@ -29,6 +29,7 @@ async def character_order(order, group_id, user_id):
         '创建角色': P.create_character,
         '切换角色': P.switch_character,
         '修改角色属性': P.modify_character_attr,
+        '删除角色': P.delete_character,
         '添加效果': P.add_effect,
         '删除效果': P.delete_effect,
         '卡牌': P.add_card,
