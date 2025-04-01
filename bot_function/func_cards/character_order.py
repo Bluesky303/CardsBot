@@ -7,11 +7,17 @@ from ..message import *
 from .character import *
 
 async def character_order(order, group_id, user_id):
-    character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '添加效果', '删除效果', '卡牌', '新建卡牌', '卡牌库']
+    character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '添加效果', '删除效果', '卡牌', '新建卡牌', '卡牌库', '开始战斗']
     if order[0] in character_dic_list:
         P = Character(group_id, user_id) # 从文件创建角色并及时保存保证可中断
     else:
         return [create_text_msg('指令错误')]
+    
+    def start():
+        P.start_battle()
+        with open('../../state.txt', 'w') as f:
+            f.write('cards battle')
+        return [create_text_msg('战斗开始')]
     character_dic = {
         '角色状态': P.show_now_character, 
         '角色列表': P.show_character_list,
@@ -23,7 +29,7 @@ async def character_order(order, group_id, user_id):
         '卡牌': P.add_card,
         '新建卡牌': P.create_card,
         '卡牌库': P.show_card_list,
-        '开始战斗': P.start_battle,
+        '开始战斗': start,
     }
     
     try:

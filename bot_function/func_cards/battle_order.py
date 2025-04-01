@@ -8,9 +8,16 @@ from .cards import *
 from ..message import *
 from .character import *
 async def battle_order(order: list, group_id, user_id):
-    battle_dic_list = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收']
+    battle_dic_list = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收', '结束']
     if order[0] in battle_dic_list:
         P = Character(group_id, user_id) # 从文件创建角色并及时保存保证可中断
+    
+    
+    def end():
+        P.end_battle()
+        with open('../../state.txt', 'w') as f:
+            f.write('cards character')
+        return [create_text_msg('战斗结束')]
     battle_dic = { # 指令列表
         '抽牌堆': P.Pile.show_draw_pile,
         '手牌': P.Pile.show_hand_pile,
@@ -21,7 +28,7 @@ async def battle_order(order: list, group_id, user_id):
         '弃牌': P.Pile.discard,
         '搜寻': P.Pile.search,
         '回收': P.Pile.reclaim,
-        '结束': P.end_battle,
+        '结束': end,
     }
    
     try:
