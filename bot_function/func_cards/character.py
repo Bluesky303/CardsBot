@@ -90,7 +90,7 @@ class Character:
                     format_text = format_text.replace('$1', str(value))
                 for a in range(len(arg)):
                     format_text = format_text.replace(f'${a+1}', str(value[arg[a]]))
-                text += format_text + '\n'
+                text += format_text
             return text
 
         dic = {
