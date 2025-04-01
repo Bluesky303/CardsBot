@@ -43,12 +43,13 @@ class Character:
             #   - 战斗信息.json
             os.mkdir(self.path)
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
-            json.dump({'list': []}, open(self.path + 'cards_list.json', 'w', encoding='utf-8'))
+            
         self.chracterlist = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
         self.character = {} # 执行switch后保存当前角色信息
-        self.cards_list = json.load(open(self.path + 'cards_list.json', 'r', encoding='utf-8')) # 获取卡牌列表
+        self.cards_list = {} # 执行switch后保存当前角色卡组
         if self.chracterlist['now'] == None:
             self.character = None
+            self.cards_list = None
         else:
             self.switch_character([self.chracterlist['now']])
 
@@ -71,10 +72,7 @@ class Character:
         
         self.chracterlist['now'] = arg[0]
         self.character = json.load(open(self.path + self.chracterlist['now'] + '/' + self.chracterlist['now'] + '.json', 'r', encoding='utf-8'))
-        #p = []
-        #for card in self.character['cards']:
-        #    p += [json.load(open(self.path + self.chracterlist['now'] + '/' + card + '.json'))] * self.character['cards'][card]
-        #self.cardpile = CardPile(p)
+        self.cards_list = json.load(open(self.path + 'cards_list.json', 'r', encoding='utf-8'))
         return '当前角色为' + self.chracterlist['now']
     
     def show_character_list(self, arg): # 显示角色列表
@@ -158,6 +156,7 @@ class Character:
         if arg[0] in self.chracterlist['list']: return '角色已存在'
         self.chracterlist['list'].append(arg[0])
         os.mkdir(self.path + arg[0])
+        json.dump({'list': []}, open(self.path + arg[0] + '/cards_list.json', 'w', encoding='utf-8'))
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
         os.system(f'copy ./character/基础卡.json {self.path}{arg[0]}/基础卡.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
