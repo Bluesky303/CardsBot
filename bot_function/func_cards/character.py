@@ -74,9 +74,10 @@ class Character:
             else: '指令错误'
         
         def effect_text(dic, arg = [], filter = [], format = '\n    $0: $1', text_replace = {'text':{'$0': 'value'}}):
-            # arg 返回每一项的什么内容， 项数必须和格式中 $个数-1 相同
+            # arg 为返回项目，格式由format决定，依次对应$0, $1, ...
             # 不输入arg则认为$1替换为value本身
             # filter 过滤部分项
+            # text_replace 对返回项目进行格式化，将对应内容替换为对应值
             # e.g. dic = character['ability'], arg = ['text']
             # 返回：
             #     能力1：文本1
@@ -162,4 +163,11 @@ class Character:
             self.character['state']['effect'][arg[0]] = new_effect
         self.save()
         return self.show_now_character()
-            
+    
+    def delete_effect(self, arg):
+        if self.character == None: return '当前没有角色'
+        if len(arg) == 0: return '请输入参数'
+        if arg[0] not in self.character['state']['effect']: return '效果不存在'
+        del self.character['state']['effect'][arg[0]]
+        self.save()
+        return self.show_now_character()
