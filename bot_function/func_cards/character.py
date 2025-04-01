@@ -72,7 +72,7 @@ class Character:
         
         self.chracterlist['now'] = arg[0]
         self.character = json.load(open(self.path + self.chracterlist['now'] + '/' + self.chracterlist['now'] + '.json', 'r', encoding='utf-8'))
-        self.cards_list = json.load(open(self.path + 'cards_list.json', 'r', encoding='utf-8'))
+        self.cards_list = json.load(open(self.path +  self.chracterlist['now'] + '/' + 'cards_list.json', 'r', encoding='utf-8'))
         return '当前角色为' + self.chracterlist['now']
     
     def show_character_list(self, arg): # 显示角色列表
