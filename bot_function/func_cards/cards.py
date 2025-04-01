@@ -19,7 +19,7 @@ class Card:
                     'func': 效果函数 
                 }
         '''
-        self.
+        
     
 class CardPile:
     def __init__(self, cards):
