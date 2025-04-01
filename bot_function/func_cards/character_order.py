@@ -19,7 +19,7 @@ async def character_order(order, group_id, user_id):
         P.start_battle()
         with open('../../state.txt', 'w') as f:
             f.write('cards battle')
-        return [create_text_msg('战斗开始')]
+        return '战斗开始'
     
     def end(arg):
         P.end_battle()
