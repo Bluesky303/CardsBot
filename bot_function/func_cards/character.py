@@ -234,7 +234,7 @@ class Character:
         self.save()
         return self.show_card_list()
     
-    def show_card_list(self, arg): # 显示卡牌列表
+    def show_card_list(self, arg = []): # 显示卡牌列表
         if self.character == None: return '当前没有角色'
         return '\n' + ' '.join(self.cards_list['list'])
     
