@@ -82,7 +82,10 @@ class Character:
         for key, value in self.character['cards'].items():
             Pile += [json.load(open(self.path + self.chracterlist['now'] + '/' + key + '.json', 'r', encoding='utf-8'))] * value
         self.Pile = CardPile(Pile)
-        
+        if os.exists(self.path + self.chracterlist['now'] + '/' + 'battle.json'):
+            battle = json.load(open(self.path + self.chracterlist['now'] + '/' + 'battle.json', 'r', encoding='utf-8'))
+            for key, value in battle.items():   
+                self.Pile.__dict__[key] = value
         return '当前角色为' + self.chracterlist['now']
     
     def show_character_list(self, arg): # 显示角色列表
