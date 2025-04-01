@@ -25,7 +25,7 @@ async def character_order(order, group_id, user_id):
         P.end_battle()
         with open('../../state.txt', 'w') as f:
             f.write('cards character')
-        return [create_text_msg('战斗结束')]
+        return '战斗结束'
 
     character_dic = {
         '角色状态': P.show_now_character, 
@@ -65,7 +65,10 @@ async def character_order(order, group_id, user_id):
             0 打击*5
             1 防御*5
             '''
-            return [at_user(user_id), create_text_msg(f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+            if order[0] == '结束': 
+                return [at_user(user_id), create_text_msg(' ' + Piledata)]
+            else:
+                return [at_user(user_id), create_text_msg(f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
         else:
             if not order[0] in character_dic_list: return [at_user(user_id), create_text_msg(' ' + '非战斗状态无法进行此操作')]
             CharacterData = character_dic[order[0]](order[1:])
