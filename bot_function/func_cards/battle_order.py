@@ -13,7 +13,7 @@ async def battle_order(order: list, group_id, user_id):
         P = Character(group_id, user_id) # 从文件创建角色并及时保存保证可中断
     
     
-    def end():
+    def end(arg):
         P.end_battle()
         with open('../../state.txt', 'w') as f:
             f.write('cards character')

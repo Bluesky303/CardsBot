@@ -13,7 +13,7 @@ async def character_order(order, group_id, user_id):
     else:
         return [create_text_msg('指令错误')]
     
-    def start():
+    def start(arg):
         P.start_battle()
         with open('../../state.txt', 'w') as f:
             f.write('cards battle')
