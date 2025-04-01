@@ -229,10 +229,10 @@ class Character:
         card = {'name': arg[0]}
         if len(arg) == 2: card['attr'] = arg[1]
         else: card['attr'] = ''
-        self.cards_list['list'].append(card)
+        self.cards_list['list'].append(arg[0])
         json.dump(card, open(self.path + self.chracterlist['now'] + '/' + arg[0] + '.json', 'w', encoding='utf-8'))
         self.save()
-        return self.show_now_character()
+        return self.show_card_list()
     
     def show_card_list(self, arg): # 显示卡牌列表
         if self.character == None: return '当前没有角色'
