@@ -7,7 +7,7 @@ from ..message import *
 from .character import *
 
 async def character_order(order, group_id, user_id):
-    character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '添加效果', '删除效果', '卡牌']
+    character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '添加效果', '删除效果', '卡牌', '新建卡牌', '卡牌库']
     if order[0] in character_dic_list:
         P = Character(group_id, user_id) # 从文件创建角色并及时保存保证可中断
     else:
@@ -21,6 +21,8 @@ async def character_order(order, group_id, user_id):
         '添加效果': P.add_effect,
         '删除效果': P.delete_effect,
         '卡牌': P.add_card,
+        '新建卡牌': P.create_card,
+        '卡牌库': P.show_card_list
     }
     
     try:
