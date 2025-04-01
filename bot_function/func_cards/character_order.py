@@ -17,14 +17,10 @@ async def character_order(order, group_id, user_id):
     
     def start(arg):
         P.start_battle()
-        with open('../../state.txt', 'w') as f:
-            f.write('cards battle')
         return '战斗开始'
     
     def end(arg):
         P.end_battle()
-        with open('../../state.txt', 'w') as f:
-            f.write('cards character')
         return '战斗结束'
 
     character_dic = {
