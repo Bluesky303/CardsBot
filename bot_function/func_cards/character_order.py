@@ -34,7 +34,7 @@ async def character_order(order, group_id, user_id):
         '卡牌': P.add_card,
         '新建卡牌': P.create_card,
         '卡牌库': P.show_card_list,
-        '开始战斗': start,
+        '开始': start,
     }
     
     battle_dic = { # 指令列表
