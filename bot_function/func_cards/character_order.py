@@ -20,7 +20,7 @@ async def character_order(order, group_id, user_id):
         '修改角色属性': P.modify_character_attr,
         '添加效果': P.add_effect,
         '删除效果': P.delete_effect,
-        '添加卡牌': P.add_card,
+        '卡牌': P.add_card,
     }
     
     try:
