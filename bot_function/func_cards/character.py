@@ -89,9 +89,9 @@ class Character:
                 if arg == []:
                     format_text = format_text.replace('$1', str(value))
                 for a in range(len(arg)):
-                    if a in text_replace:
-                        for b in text_replace[a]:
-                            content = value[arg[a]].replace(b, value[text_replace[a][b]])
+                    if arg[a] in text_replace:
+                        for b in text_replace[arg[a]]:
+                            content = value[arg[a]].replace(b, value[text_replace[arg[a]][b]])
                     else:
                         content = str(value[arg[a]])
                     format_text = format_text.replace(f'${a+1}', content)
