@@ -2,7 +2,7 @@
 处理战斗过程中的指令
 '''
 
-
+import traceback
 
 from .cards import *
 from ..message import *
@@ -38,6 +38,7 @@ async def battle_order(order: list, group_id, user_id):
     except Exception as e:
         print(e)
         text = [create_text_msg('参数错误')]
+        print(traceback.format_exc())
     
     await send_msg(group_id, text)
     
