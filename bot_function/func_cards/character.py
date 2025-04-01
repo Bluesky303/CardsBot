@@ -229,9 +229,12 @@ class Character:
             if not arg[i+1].isdigit(): return '参数值错误'
             else:
                 self.character['cards'][arg[i]] = int(arg[i+1])
+        del_list = []
         for i in self.character['cards']:
             if self.character['cards'][i] == 0:
-                del self.character['cards'][i]
+                del_list.append(i)
+        for i in del_list:
+            del self.character['cards'][i]
         if sum(self.character['cards'].values()) < 15:
             self.character['cards']['基础卡'] = 15 - sum(self.character['cards'].values())
         self.save()
