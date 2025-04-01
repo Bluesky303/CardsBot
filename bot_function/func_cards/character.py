@@ -104,7 +104,7 @@ class Character:
             '卡组':     f'\n卡组: ' + effect_text(self.character['cards'], format='\n    $0: $1 张'),
         }
         
-        text = f'姓名: {self.character['name']}'
+        text = f'姓名: {self.character["name"]}'
         for i in show:
             text += dic[i]
         return text
