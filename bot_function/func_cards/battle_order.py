@@ -6,18 +6,21 @@
 
 from .cards import *
 from ..message import *
-
+from .character import *
 async def battle_order(order: list, group_id, user_id):
+    battle_dic_list = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收']
+    if order[0] in battle_dic_list:
+        P = Character(group_id, user_id) # 从文件创建角色并及时保存保证可中断
     battle_dic = { # 指令列表
-        '抽牌堆': Pile.show_draw_pile,
-        '手牌': Pile.show_hand_pile,
-        '弃牌堆': Pile.show_discard_pile,
-        '消耗': Pile.show_exhausted_pile,
-        '抽牌': Pile.draw,
-        '使用': Pile.using,
-        '弃牌': Pile.discard,
-        '搜寻': Pile.search,
-        '回收': Pile.reclaim,
+        '抽牌堆': P.Pile.show_draw_pile,
+        '手牌': P.Pile.show_hand_pile,
+        '弃牌堆': P.Pile.show_discard_pile,
+        '消耗': P.Pile.show_exhausted_pile,
+        '抽牌': P.Pile.draw,
+        '使用': P.Pile.using,
+        '弃牌': P.Pile.discard,
+        '搜寻': P.Pile.search,
+        '回收': P.Pile.reclaim,
     }
    
     try:
@@ -38,23 +41,4 @@ async def battle_order(order: list, group_id, user_id):
     
     await send_msg(group_id, text)
     
-def attack(damage):
-    return {'attack': damage}
-
-def defence(shield):
-    return {'defence': shield}
-card1 = Card({
-    'name': 'attack',
-    'type': 'attack',
-    'value': 1, 
-    'func': attack(6)
-    })
-card2 = Card({
-    'name': 'defence',
-    'type': 'defence',
-    'value': 2, 
-    'func': defence(6)
-    })
-Pile = CardPile([card1]*5+[card2]*5)
-
 

@@ -25,6 +25,7 @@ class Character:
                 'now':  当前角色
             }
         character: 当前角色信息
+        Pile: 卡组
         '''
         # 基础变量
         self.group_id = group_id
@@ -47,12 +48,14 @@ class Character:
         self.chracterlist = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
         self.character = {} # 执行switch后保存当前角色信息
         self.cards_list = {} # 执行switch后保存当前角色卡组
+        self.Pile = None # 卡组
         if self.chracterlist['now'] == None:
             self.character = None
             self.cards_list = None
         else:
             self.switch_character([self.chracterlist['now']])
 
+        
     def save(self): # 保存
         '''
         保存
@@ -74,6 +77,11 @@ class Character:
         self.chracterlist['now'] = arg[0]
         self.character = json.load(open(self.path + self.chracterlist['now'] + '/' + self.chracterlist['now'] + '.json', 'r', encoding='utf-8'))
         self.cards_list = json.load(open(self.path +  self.chracterlist['now'] + '/' + 'cards_list.json', 'r', encoding='utf-8'))
+        Pile = []
+        for key, value in self.character['cards'].items():
+            Pile += [json.load(open(self.path + self.chracterlist['now'] + '/' + key + '.json', 'r', encoding='utf-8'))] * value
+        self.Pile = CardPile(Pile)
+        
         return '当前角色为' + self.chracterlist['now']
     
     def show_character_list(self, arg): # 显示角色列表
