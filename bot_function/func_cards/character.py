@@ -145,10 +145,11 @@ class Character:
         if arg[0] in self.character['state']['effect']:
             if not arg[1][1:].isdigit() or not arg[1][0] in ['+', '-', '=']: return '参数值错误'
             self.character['state']['effect'][arg[0]]['value'] = operation(self.character['state']['effect'][arg[0]]['value'], int(arg[1]), arg[1][0])
+            if arg[1][0] == '=' and len(arg) == 3:
+                new_effect['text'] = arg[2]
         else:
             if not arg[1][1:].isdigit() or not arg[1][0] == '=': return '参数值错误'
             new_effect['value'] = int(arg[1][1:])
-            print(arg)
             if len(arg) == 3:
                 new_effect['text'] = arg[2]
             else:
