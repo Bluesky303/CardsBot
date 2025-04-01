@@ -4,6 +4,10 @@ from ..message import *
 import json
 import os
 
+def operation(a, b, c):
+    dic = {'+': a + b, '-': a - b, '=': b}
+    return dic[c]
+
 # 创建文件夹
 if not os.path.exists("./character"):
     os.mkdir("./character")
@@ -121,23 +125,30 @@ class Character:
     def modify_character_attr(self, arg):
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
-        if len(arg) % 2 != 0: return '参数数目错误'
-        def operation(a, b, c):
-            dic = {'+': a + b, '-': a - b, '=': b}
-            return dic[c]
+        if len(arg) % 3 != 0: return '参数数目错误'
+
         for i in range(0, len(arg), 2):
             if arg[i] == 'effect' or not arg[i+1][1:].isdigit() or not arg[i+1][0] in ['+', '-', '=']: return '参数值错误'
             else:
-                if arg[i] in self.character['state']:
-                    self.character['state'][arg[i]] = operation(self.character['state'][arg[i]], int(arg[i+1]), arg[i+1][0])
-                if arg[i] in self.character['attr']:
-                    self.character['attr'][arg[i]] = operation(self.character['attr'][arg[i]], int(arg[i+1]), arg[i+1][0])
+                # 修改属性值
+                l = ['state', 'attr']
+                for j in l:
+                    if arg[i] in self.character[j]:
+                        self.character[j][arg[i]] = operation(self.character[j][arg[i]], int(arg[i+1]), arg[i+1][0])
         self.save()
         return self.show_now_character()
     
     def add_effect(self, arg):
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
-        if len(arg) % 2 != 0: return '参数数目错误'
-        for i in range(0, len(arg), 2):
-            pass
+        new_effect = {}
+        if arg[0] in self.character['state']['effect']:
+            if not arg[1][1:].isdigit() or not arg[1][0] in ['+', '-', '=']: return '参数值错误'
+            self.character['state']['effect'][arg[0]]['value'] = operation(self.character['state']['effect'][arg[0]]['value'], int(arg[1]), arg[1][0])
+        else:
+            if not arg[1][1:].isdigit() or not arg[1][0] == '=': return '参数值错误'
+            new_effect['value'] = int(arg[1][1:])
+            if len(arg) == 3:
+                new_effect['text'] = arg[2]
+        self.character['state']['effect'][arg[0]] = new_effect
+            
