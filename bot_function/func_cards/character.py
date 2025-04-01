@@ -88,6 +88,7 @@ class Character:
             battle = json.load(open(self.path + self.characterlist['now'] + '/' + 'battle.json', 'r', encoding='utf-8'))
             for key, value in battle.items():   
                 self.Pile.__dict__[key] = value
+        self.save()
         return '当前角色为' + self.characterlist['now']
     
     def show_character_list(self, arg): # 显示角色列表
