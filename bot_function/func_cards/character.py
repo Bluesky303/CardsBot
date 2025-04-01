@@ -27,9 +27,6 @@ class Character:
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
         self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
         self.character = {} # 执行switch后保存当前角色信息
-        # 准备显示的属性列表
-        # 可选项['状态', '效果', '详细效果', '属性', '能力', '详细能力', '固有技能', '详细固有', '卡组', '详细卡组']
-        self.show = ['状态', '效果', '属性', '能力', '固有技能', '卡组']
         if self.dic['now'] == None:
             self.character = None
             self.cardpile = None
@@ -61,17 +58,16 @@ class Character:
         if self.character == None: return '当前没有角色'
         
         show_list = ['状态', '效果', '详细效果', '属性', '能力', '详细能力', '固有技能', '详细固有', '卡组', '详细卡组']
+        show = ['状态', '效果', '属性', '能力', '固有技能', '卡组']
         # 处理参数
         # 参数:
-        #   -显示 ..    表示显示选项内容并更新self.show列表
         #   -仅显示 ..  表示仅显示选项内容，不更新self.show
-        if len(arg) == 0: show = self.show
         if len(arg) == 1: return '参数错误'
         if len(arg) > 1:
             for i in arg[1:]: 
                 if i not in show_list: return '参数错误'
-            if arg[0] == '-显示': self.show = arg[1:]
-            show = arg[1:]
+            if arg[0] == '-显示': show = arg[1:]
+            else: '指令错误'
         
         def effect_text(dic, arg = [], filter = [], format = '\n    $0: $1'):
             # arg 返回每一项的什么内容， 项数必须和格式中 $个数-1 相同
