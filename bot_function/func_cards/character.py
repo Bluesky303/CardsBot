@@ -14,6 +14,18 @@ if not os.path.exists("./character"):
 
 class Character:
     def __init__(self, group_id, user_id):
+        '''
+        初始化函数
+        group_id: 群号
+        user_id: qq号
+        path: 保存路径
+        characterlist: 角色列表
+            {
+                'list': 角色列表
+                'now':  当前角色
+            }
+        character: 当前角色信息
+        '''
         # 基础变量
         self.group_id = group_id
         self.user_id = user_id
@@ -25,44 +37,64 @@ class Character:
             # - character_list.json
             # - 角色名/
             #   - 角色名.json
-            #   - 卡牌x.json
+            #   - 卡牌列表.json
+            #   - 卡牌x.json      数值
+            #   - 卡牌x.py        功能实现
             #   - 战斗信息.json
             os.mkdir(self.path)
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
-        self.dic = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
+            json.dump({'list': []}, open(self.path + 'cards_list.json', 'w', encoding='utf-8'))
+        self.chracterlist = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
         self.character = {} # 执行switch后保存当前角色信息
-        if self.dic['now'] == None:
+        self.cards_list = json.load(open(self.path + 'cards_list.json', 'r', encoding='utf-8')) # 获取卡牌列表
+        if self.chracterlist['now'] == None:
             self.character = None
-            self.cardpile = None
         else:
-            self.switch_character([self.dic['now']])
+            self.switch_character([self.chracterlist['now']])
 
     def save(self): # 保存
-        json.dump(self.character, open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'w', encoding='utf-8'))
-        json.dump(self.dic, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
+        '''
+        保存
+        '''
+        json.dump(self.character, open(self.path + self.chracterlist['now'] + '/' + self.chracterlist['now'] + '.json', 'w', encoding='utf-8'))
+        json.dump(self.chracterlist, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
 
     def switch_character(self, arg): # 切换角色
+        '''
+        切换角色
+        arg[0] 为角色名 
+        '''
         # 参数限制
         if len(arg) == 0: return '请输入参数'
         if len(arg) > 1: return '参数错误'
-        if arg[0] not in self.dic['list']: return '角色不存在'
+        if arg[0] not in self.chracterlist['list']: return '角色不存在'
         
-        self.dic['now'] = arg[0]
-        self.character = json.load(open(self.path + self.dic['now'] + '/' + self.dic['now'] + '.json', 'r', encoding='utf-8'))
+        self.chracterlist['now'] = arg[0]
+        self.character = json.load(open(self.path + self.chracterlist['now'] + '/' + self.chracterlist['now'] + '.json', 'r', encoding='utf-8'))
         #p = []
         #for card in self.character['cards']:
-        #    p += [json.load(open(self.path + self.dic['now'] + '/' + card + '.json'))] * self.character['cards'][card]
+        #    p += [json.load(open(self.path + self.chracterlist['now'] + '/' + card + '.json'))] * self.character['cards'][card]
         #self.cardpile = CardPile(p)
-        return '当前角色为' + self.dic['now']
+        return '当前角色为' + self.chracterlist['now']
     
     def show_character_list(self, arg): # 显示角色列表
-        return '\n' + ' '.join(self.dic['list']) + f'\n当前角色：{self.dic["now"]}' 
+        '''
+        显示角色列表
+        '''
+        return '\n' + ' '.join(self.chracterlist['list']) + f'\n当前角色：{self.chracterlist["now"]}' 
     
-    def show_now_character(self, arg=[]):
+    def show_now_character(self, arg=[]): # 显示当前角色信息
+        '''
+        显示当前角色信息
+        默认显示 状态 效果 属性
+        arg[0] 为选项，
+            -显示 ... 为仅显示选项内容，不更新self.show
+            
+        '''
         if self.character == None: return '当前没有角色'
         
         show_list = ['状态', '效果', '详细效果', '属性', '能力', '详细能力', '固有技能', '详细固有', '卡组', '详细卡组']
-        show = ['状态', '效果', '属性', '能力', '固有技能', '卡组']
+        show = ['状态', '效果', '属性']
         # 处理参数
         # 参数:
         #   -仅显示 ..  表示仅显示选项内容，不更新self.show
@@ -71,7 +103,7 @@ class Character:
             for i in arg[1:]: 
                 if i not in show_list: return '参数错误'
             if arg[0] == '-显示': show = arg[1:]
-            else: '指令错误'
+            else: return '指令错误'
         
         def effect_text(dic, arg = [], filter = [], format = '\n    $0: $1', text_replace = {'text':{'$0': 'value'}}):
             # arg 为返回项目，格式由format决定，依次对应$0, $1, ...
@@ -116,10 +148,15 @@ class Character:
             text += dic[i]
         return text
      
-    def create_character(self, arg):
+    def create_character(self, arg): # 创建角色
+        '''
+        创建角色
+        arg[0] 为角色名
+        '''
         if len(arg) == 0: return '请输入参数'
-        if arg[0] in self.dic['list']: return '角色已存在'
-        self.dic['list'].append(arg[0])
+        if len(arg) > 1: return '参数错误'
+        if arg[0] in self.chracterlist['list']: return '角色已存在'
+        self.chracterlist['list'].append(arg[0])
         os.mkdir(self.path + arg[0])
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
         text1 = self.switch_character(arg)
@@ -128,10 +165,22 @@ class Character:
         self.save()
         return text1 + '\n' + text2
     
-    def modify_character_attr(self, arg):
+    def delete_character(self, arg): # 删除角色
+        '''
+        删除角色
+        arg[0] 为角色名
+        '''
+        if len(arg) == 0: return '请输入参数'
+        if arg[0] not in self.chracterlist['list']: return '角色不存在'
+        if arg[0] == self.chracterlist['now']: return '当前角色不能删除'
+        self.chracterlist['list'].remove(arg[0])
+        os.system(f'rmdir {self.path}{arg[0]}'.replace('/', '\\'))
+        return '已删除角色' + arg[0]
+    
+    def modify_character_attr(self, arg): # 修改角色属性
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
-        if len(arg) % 3 != 0: return '参数数目错误'
+        if len(arg) % 2 != 0: return '参数数目错误'
 
         for i in range(0, len(arg), 2):
             if arg[i] == 'effect' or not arg[i+1][1:].isdigit() or not arg[i+1][0] in ['+', '-', '=']: return '参数值错误'
@@ -144,7 +193,7 @@ class Character:
         self.save()
         return self.show_now_character()
     
-    def add_effect(self, arg):
+    def add_effect(self, arg): # 添加效果
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
         new_effect = {}
@@ -164,10 +213,13 @@ class Character:
         self.save()
         return self.show_now_character()
     
-    def delete_effect(self, arg):
+    def delete_effect(self, arg): # 删除效果
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
         if arg[0] not in self.character['state']['effect']: return '效果不存在'
         del self.character['state']['effect'][arg[0]]
         self.save()
         return self.show_now_character()
+
+    def show_card_list(self, arg): # 显示存在的卡牌
+        pass

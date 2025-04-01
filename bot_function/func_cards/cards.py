@@ -5,12 +5,22 @@
 import random
 
 class Card:
-    def __init__(self, dic):
-        self.name = dic['name']
-        self.type = dic['type']
-        self.value = dic['value']
-        self.func = dic['func']
-    
+    def __init__(self, path):
+        '''
+        初始化，输入路径
+        name: 名字
+        type: 类型列表
+        func_self: 对牌堆和回合有影响的功能，子功能列表[]
+            子功能: 功能函数
+        func_character: 对角色作用的功能, 子功能列表[]
+            子功能: 字典 
+                {
+                    'character': 作用对象，列表
+                    'func': 效果函数 
+                }
+        '''
+        
+
     def played(self):
         self.func
         return self.type
