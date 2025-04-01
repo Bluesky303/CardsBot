@@ -1,6 +1,7 @@
 '''
-角色相关指令，主要用于战斗外场景
+角色相关指令
 '''
+import traceback
 
 from .character import *
 from ..message import *
@@ -8,7 +9,8 @@ from .character import *
 
 async def character_order(order, group_id, user_id):
     character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '添加效果', '删除效果', '卡牌', '新建卡牌', '卡牌库', '开始战斗']
-    if order[0] in character_dic_list:
+    battle_dic_list = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收', '结束']
+    if order[0] in character_dic_list + battle_dic_list:
         P = Character(group_id, user_id) # 从文件创建角色并及时保存保证可中断
     else:
         return [create_text_msg('指令错误')]
@@ -18,6 +20,13 @@ async def character_order(order, group_id, user_id):
         with open('../../state.txt', 'w') as f:
             f.write('cards battle')
         return [create_text_msg('战斗开始')]
+    
+    def end(arg):
+        P.end_battle()
+        with open('../../state.txt', 'w') as f:
+            f.write('cards character')
+        return [create_text_msg('战斗结束')]
+
     character_dic = {
         '角色状态': P.show_now_character, 
         '角色列表': P.show_character_list,
@@ -32,10 +41,34 @@ async def character_order(order, group_id, user_id):
         '开始战斗': start,
     }
     
+    battle_dic = { # 指令列表
+        '抽牌堆': P.Pile.show_draw_pile,
+        '手牌': P.Pile.show_hand_pile,
+        '弃牌堆': P.Pile.show_discard_pile,
+        '消耗': P.Pile.show_exhausted_pile,
+        '抽牌': P.Pile.draw,
+        '使用': P.Pile.using,
+        '弃牌': P.Pile.discard,
+        '搜寻': P.Pile.search,
+        '回收': P.Pile.reclaim,
+        '结束': end,
+    }
+    
     try:
-        CharacterData = character_dic[order[0]](order[1:])
-        return [at_user(user_id), create_text_msg(' ' + CharacterData)]
+        if P.onbattle:
+            Piledata = battle_dic[order[0]](order[1:]) # 执行指令，返回值都是牌堆列表，表示需要展示牌堆信息
+            P.save_battle()
+            '''
+            例如：
+            当前抽牌堆：
+            0 打击*5
+            1 防御*5
+            '''
+            return [at_user(user_id), create_text_msg(f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+        else:
+            CharacterData = character_dic[order[0]](order[1:])
+            return [at_user(user_id), create_text_msg(' ' + CharacterData)]
     except Exception as e:
-        print(e)
+        print(traceback.format_exc())
         return [at_user(user_id), create_text_msg(' ' + '参数错误')]
     

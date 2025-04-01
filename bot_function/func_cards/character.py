@@ -50,6 +50,7 @@ class Character:
         self.character = {} # 执行switch后保存当前角色信息
         self.cards_list = {} # 执行switch后保存当前角色卡组
         self.Pile = None # 卡组
+        self.onbattle = False # 是否在战斗中
         if self.chracterlist['now'] == None:
             self.character = None
             self.cards_list = None
@@ -83,6 +84,7 @@ class Character:
             Pile += [json.load(open(self.path + self.chracterlist['now'] + '/' + key + '.json', 'r', encoding='utf-8'))] * value
         self.Pile = CardPile(Pile)
         if os.path.exists(self.path + self.chracterlist['now'] + '/' + 'battle.json'):
+            self.onbattle = True
             battle = json.load(open(self.path + self.chracterlist['now'] + '/' + 'battle.json', 'r', encoding='utf-8'))
             for key, value in battle.items():   
                 self.Pile.__dict__[key] = value

@@ -20,11 +20,11 @@ async def root(request: Request):
         try:
             if order[0] == '切换' and user_id == 506473613:
 
-                state.switch_state(tuple(order[1:]))
-                text = [message.create_text_msg('状态切换为: ' + ' '.join(order[1:]))]
+                state.switch_state(order[1])
+                text = [message.create_text_msg('状态切换为: ' + order[1])]
                 
             elif order[0] == '状态':
-                text = [message.create_text_msg('当前状态为: ' + ' '.join(state.get_state()))]
+                text = [message.create_text_msg('当前状态为: ' + state.get_state())]
                 
             else:
                 text = await state.state_dic[state.get_state()](order, group_id, user_id)
