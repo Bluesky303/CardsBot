@@ -151,4 +151,6 @@ class Character:
             if len(arg) == 3:
                 new_effect['text'] = arg[2]
         self.character['state']['effect'][arg[0]] = new_effect
+        self.save()
+        return  self.show_now_character()
             
