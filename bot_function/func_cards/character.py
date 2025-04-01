@@ -46,25 +46,25 @@ class Character:
             os.mkdir(self.path)
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
             
-        self.chracterlist = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
+        self.characterlist = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
         self.character = {} # 执行switch后保存当前角色信息
         self.cards_list = {} # 执行switch后保存当前角色卡组
         self.Pile = None # 卡组
         self.onbattle = False # 是否在战斗中
-        if self.chracterlist['now'] == None:
+        if self.characterlist['now'] == None:
             self.character = None
             self.cards_list = None
         else:
-            self.switch_character([self.chracterlist['now']])
+            self.switch_character([self.characterlist['now']])
 
         
     def save(self): # 保存
         '''
         保存
         '''
-        json.dump(self.character, open(self.path + self.chracterlist['now'] + '/' + self.chracterlist['now'] + '.json', 'w', encoding='utf-8'))
-        json.dump(self.chracterlist, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
-        json.dump(self.cards_list, open(self.path + self.chracterlist['now'] + '/' + 'cards_list.json', 'w', encoding='utf-8'))
+        json.dump(self.character, open(self.path + self.characterlist['now'] + '/' + self.characterlist['now'] + '.json', 'w', encoding='utf-8'))
+        json.dump(self.characterlist, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
+        json.dump(self.cards_list, open(self.path + self.characterlist['now'] + '/' + 'cards_list.json', 'w', encoding='utf-8'))
 
     def switch_character(self, arg): # 切换角色
         '''
@@ -74,27 +74,27 @@ class Character:
         # 参数限制
         if len(arg) == 0: return '请输入参数'
         if len(arg) > 1: return '参数错误'
-        if arg[0] not in self.chracterlist['list']: return '角色不存在'
+        if arg[0] not in self.characterlist['list']: return '角色不存在'
         
-        self.chracterlist['now'] = arg[0]
-        self.character = json.load(open(self.path + self.chracterlist['now'] + '/' + self.chracterlist['now'] + '.json', 'r', encoding='utf-8'))
-        self.cards_list = json.load(open(self.path +  self.chracterlist['now'] + '/' + 'cards_list.json', 'r', encoding='utf-8'))
+        self.characterlist['now'] = arg[0]
+        self.character = json.load(open(self.path + self.characterlist['now'] + '/' + self.characterlist['now'] + '.json', 'r', encoding='utf-8'))
+        self.cards_list = json.load(open(self.path +  self.characterlist['now'] + '/' + 'cards_list.json', 'r', encoding='utf-8'))
         Pile = []
         for key, value in self.character['cards'].items():
-            Pile += [json.load(open(self.path + self.chracterlist['now'] + '/' + key + '.json', 'r', encoding='utf-8'))] * value
+            Pile += [json.load(open(self.path + self.characterlist['now'] + '/' + key + '.json', 'r', encoding='utf-8'))] * value
         self.Pile = CardPile(Pile)
-        if os.path.exists(self.path + self.chracterlist['now'] + '/' + 'battle.json'):
+        if os.path.exists(self.path + self.characterlist['now'] + '/' + 'battle.json'):
             self.onbattle = True
-            battle = json.load(open(self.path + self.chracterlist['now'] + '/' + 'battle.json', 'r', encoding='utf-8'))
+            battle = json.load(open(self.path + self.characterlist['now'] + '/' + 'battle.json', 'r', encoding='utf-8'))
             for key, value in battle.items():   
                 self.Pile.__dict__[key] = value
-        return '当前角色为' + self.chracterlist['now']
+        return '当前角色为' + self.characterlist['now']
     
     def show_character_list(self, arg): # 显示角色列表
         '''
         显示角色列表
         '''
-        return '\n' + ' '.join(self.chracterlist['list']) + f'\n当前角色：{self.chracterlist["now"]}' 
+        return '\n' + ' '.join(self.characterlist['list']) + f'\n当前角色：{self.characterlist["now"]}' 
     
     def show_now_character(self, arg=[]): # 显示当前角色信息
         '''
@@ -168,8 +168,8 @@ class Character:
         '''
         if len(arg) == 0: return '请输入参数'
         if len(arg) > 1: return '参数错误'
-        if arg[0] in self.chracterlist['list']: return '角色已存在'
-        self.chracterlist['list'].append(arg[0])
+        if arg[0] in self.characterlist['list']: return '角色已存在'
+        self.characterlist['list'].append(arg[0])
         os.mkdir(self.path + arg[0])
         json.dump({'list': []}, open(self.path + arg[0] + '/cards_list.json', 'w', encoding='utf-8'))
         os.system(f'copy ./character/default_character.json {self.path}{arg[0]}/{arg[0]}.json'.replace('/', '\\'))
@@ -186,9 +186,9 @@ class Character:
         arg[0] 为角色名
         '''
         if len(arg) == 0: return '请输入参数'
-        if arg[0] not in self.chracterlist['list']: return '角色不存在'
-        if arg[0] == self.chracterlist['now']: return '当前角色不能删除'
-        self.chracterlist['list'].remove(arg[0])
+        if arg[0] not in self.characterlist['list']: return '角色不存在'
+        if arg[0] == self.characterlist['now']: return '当前角色不能删除'
+        self.characterlist['list'].remove(arg[0])
         os.system(f'rmdir {self.path}{arg[0]}'.replace('/', '\\'))
         return '已删除角色' + arg[0]
     
@@ -244,7 +244,7 @@ class Character:
         if len(arg) == 2: card['attr'] = arg[1]
         else: card['attr'] = ''
         self.cards_list['list'].append(arg[0])
-        json.dump(card, open(self.path + self.chracterlist['now'] + '/' + arg[0] + '.json', 'w', encoding='utf-8'))
+        json.dump(card, open(self.path + self.characterlist['now'] + '/' + arg[0] + '.json', 'w', encoding='utf-8'))
         self.save()
         return self.show_card_list()
     
@@ -272,7 +272,7 @@ class Character:
         self.save()
         return self.show_now_character()
     
-    def save_battle(self, arg = []): # 开始战斗
+    def save_battle(self, arg = []): # 保存战斗
         if self.character == None: return '当前没有角色'
         Pile = {
             'draw_pile': self.Pile.draw_pile,
@@ -280,11 +280,11 @@ class Character:
             'exhausted_pile': self.Pile.exhausted_pile,
             'hand_pile': self.Pile.hand_pile,
         }
-        json.dump(Pile, open(self.path + self.chracterlist['now'] + '/' + 'battle.json', 'w', encoding='utf-8'))
+        json.dump(Pile, open(self.path + self.characterlist['now'] + '/' + 'battle.json', 'w', encoding='utf-8'))
     
     def start_battle(self, arg = []): # 开始战斗
         self.save_battle()
         return '战斗开始'
     
     def end_battle(self, arg = []): # 结束战斗
-        os.remove(self.path + self.chracterlist['now'] + '/' + 'battle.json')
+        os.system('del ' + (self.path + self.characterlist['now'] + '/' + 'battle.json').replace('/', '\\'))
