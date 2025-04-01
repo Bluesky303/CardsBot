@@ -226,7 +226,7 @@ class Character:
         if len(arg) == 0: return '请输入参数'
         if len(arg) % 2 != 0: return '参数数目错误'
         for i in range(0, len(arg), 2):
-            if not arg[i][1:].isdigit(): return '参数值错误'
+            if not arg[i].isdigit(): return '参数值错误'
             else:
                 self.character['cards'][arg[i]] = int(arg[i+1])
         if sum(self.character['cards'].values()) < 15:
