@@ -32,7 +32,7 @@ async def battle_order(order: list, group_id, user_id):
             0 打击*5
             1 防御*5
             '''
-            text = [create_text_msg(f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num].name for num in range(len(Piledata[1]))]))]
+            text = [create_text_msg(f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
         else:
             text = [create_text_msg('指令错误')]
     except Exception as e:
