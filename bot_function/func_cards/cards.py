@@ -37,7 +37,7 @@ class CardPile:
             else:
                 dic[self.draw_pile[i]['name']] = 1
         l = [{'name': f'{key}*{value}'} for key, value in dic.items()]
-        return ('抽牌堆', sorted(self.draw_pile, key = lambda x: x['name']))
+        return ('抽牌堆', sorted(l, key = lambda x: x['name']))
     
     def show_discard_pile(self, arg = []):
         return ('弃牌堆', self.discard_pile)
