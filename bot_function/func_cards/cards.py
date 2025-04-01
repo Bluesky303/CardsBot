@@ -29,16 +29,16 @@ class CardPile:
         self.hand_pile = []
         self.exhausted_pile = []
     
-    def show_draw_pile(self, arg):
-        return ('抽牌堆', sorted(self.draw_pile, key = lambda x: x.name))
+    def show_draw_pile(self, arg = []):
+        return ('抽牌堆', sorted(self.draw_pile, key = lambda x: x['name']))
     
-    def show_discard_pile(self, arg):
+    def show_discard_pile(self, arg = []):
         return ('弃牌堆', self.discard_pile)
     
-    def show_hand_pile(self, arg):
+    def show_hand_pile(self, arg = []):
         return ('手牌', self.hand_pile)
     
-    def show_exhausted_pile(self, arg):
+    def show_exhausted_pile(self, arg = []):
         return ('被消耗的牌', self.exhausted_pile)
     
     def draw(self, arg):
@@ -53,8 +53,12 @@ class CardPile:
     
     def using(self, arg):
         cardnum = int(arg[0])
-        self.hand_pile[cardnum].played()
-        self.discard_pile += [self.hand_pile[cardnum]]
+        if self.hand_pile[cardnum]['type'] == '佚亡':
+            self.exhausted_pile += [self.hand_pile[cardnum]]
+        elif self.hand_pile[cardnum]['type'] == '回响':
+            self.draw_pile = [self.hand_pile[cardnum]] + self.draw_pile
+        else:
+            self.discard_pile += [self.hand_pile[cardnum]]
         self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
         return ('手牌', self.hand_pile)
         
