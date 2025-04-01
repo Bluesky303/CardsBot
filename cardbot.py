@@ -27,15 +27,13 @@ async def root(request: Request):
                 text = [message.create_text_msg('当前状态为: ' + ' '.join(state.get_state()))]
                 
             else:
-                await state.state_dic[state.get_state()](order, group_id, user_id)
-                iftext = False
+                text = await state.state_dic[state.get_state()](order, group_id, user_id)
                 
         except Exception as e:
             print(e)
             text = [message.create_text_msg('指令错误')]
             
-        if iftext:
-            await message.send_msg(group_id, text)
+        await message.send_msg(group_id, text)
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8070)
