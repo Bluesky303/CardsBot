@@ -150,6 +150,8 @@ class Character:
             new_effect['value'] = int(arg[1][1:])
             if len(arg) == 3:
                 new_effect['text'] = arg[2]
+            else:
+                new_effect['text'] = ''
         self.character['state']['effect'][arg[0]] = new_effect
         self.save()
         return self.show_now_character()
