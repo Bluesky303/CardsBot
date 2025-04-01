@@ -53,9 +53,9 @@ class CardPile:
     
     def using(self, arg):
         cardnum = int(arg[0])
-        if self.hand_pile[cardnum]['type'] == '佚亡':
+        if self.hand_pile[cardnum]['attr'] == '佚亡':
             self.exhausted_pile += [self.hand_pile[cardnum]]
-        elif self.hand_pile[cardnum]['type'] == '回响':
+        elif self.hand_pile[cardnum]['attr'] == '回响':
             self.draw_pile = [self.hand_pile[cardnum]] + self.draw_pile
         else:
             self.discard_pile += [self.hand_pile[cardnum]]
