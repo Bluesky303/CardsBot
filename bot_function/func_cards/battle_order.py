@@ -21,18 +21,23 @@ async def battle_order(order: list, group_id, user_id):
         '弃牌': P.Pile.discard,
         '搜寻': P.Pile.search,
         '回收': P.Pile.reclaim,
+        '结束': P.end_battle,
     }
    
     try:
         if order[0] in battle_dic:
             Piledata = battle_dic[order[0]](order[1:]) # 执行指令，返回值都是牌堆列表，表示需要展示牌堆信息
-            '''
-            例如：
-            当前抽牌堆：
-            0 打击*5
-            1 防御*5
-            '''
-            text = [create_text_msg(f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+            if not order[0] == '结束':
+                P.save_battle()
+                '''
+                例如：
+                当前抽牌堆：
+                0 打击*5
+                1 防御*5
+                '''
+                text = [create_text_msg(f'当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+            else:
+                text = [create_text_msg('战斗结束')]
         else:
             text = [create_text_msg('指令错误')]
     except Exception as e:

@@ -22,7 +22,8 @@ async def character_order(order, group_id, user_id):
         '删除效果': P.delete_effect,
         '卡牌': P.add_card,
         '新建卡牌': P.create_card,
-        '卡牌库': P.show_card_list
+        '卡牌库': P.show_card_list,
+        '开始战斗': P.start_battle,
     }
     
     try:

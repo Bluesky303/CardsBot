@@ -26,6 +26,7 @@ class Character:
             }
         character: 当前角色信息
         Pile: 卡组
+        Pile_order: 卡组指令
         '''
         # 基础变量
         self.group_id = group_id
@@ -265,3 +266,20 @@ class Character:
             self.character['cards']['基础卡'] = 15 - sum(self.character['cards'].values()) + self.character['cards']['基础卡']
         self.save()
         return self.show_now_character()
+    
+    def save_battle(self, arg = []): # 开始战斗
+        if self.character == None: return '当前没有角色'
+        Pile = {
+            'draw_pile': self.Pile.draw_pile,
+            'discard_pile': self.Pile.discard_pile,
+            'exhausted_pile': self.Pile.exhausted_pile,
+            'hand_pile': self.Pile.hand_pile,
+        }
+        json.dump(Pile, open(self.path + self.chracterlist['now'] + '/' + 'battle.json', 'w', encoding='utf-8'))
+    
+    def start_battle(self, arg = []): # 开始战斗
+        self.save_battle()
+        return '战斗开始'
+    
+    def end_battle(self, arg = []): # 结束战斗
+        os.remove(self.path + self.chracterlist['now'] + '/' + 'battle.json')
