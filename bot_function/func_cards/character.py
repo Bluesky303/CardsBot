@@ -65,12 +65,13 @@ class Character:
         # 参数:
         #   -显示 ..    表示显示选项内容并更新self.show列表
         #   -仅显示 ..  表示仅显示选项内容，不更新self.show
+        if len(arg) == 0: show = self.show
         if len(arg) == 1: return '参数错误'
         if len(arg) > 1:
             for i in arg[1:]: 
                 if i not in show_list: return '参数错误'
-        if arg[0] == '-显示': self.show = arg[1:]
-        show = arg[1:] if len(arg) > 1 and arg[0] == '-仅显示' else self.show
+            if arg[0] == '-显示': self.show = arg[1:]
+            show = arg[1:]
         
         def effect_text(dic, arg = [], filter = [], format = '\n    $0: $1'):
             # arg 返回每一项的什么内容， 项数必须和格式中 $个数-1 相同

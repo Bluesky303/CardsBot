@@ -23,8 +23,8 @@ async def character_order(order, group_id, user_id):
     
     try:
         CharacterData = character_dic[order[0]](order[1:])
-        await send_msg(group_id, [at_user(user_id), create_text_msg(CharacterData)])
+        await send_msg(group_id, [at_user(user_id), create_text_msg(' ' + CharacterData)])
     except Exception as e:
         print(e)
-        await send_msg(group_id, [at_user(user_id), create_text_msg('参数错误')])
+        await send_msg(group_id, [at_user(user_id), create_text_msg(' ' + '参数错误')])
     
