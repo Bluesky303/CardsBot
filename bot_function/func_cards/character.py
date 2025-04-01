@@ -43,10 +43,10 @@ class Character:
             #   - 战斗信息.json
             os.mkdir(self.path)
             json.dump({'list': [], 'now': None}, open(self.path + 'character_list.json', 'w', encoding='utf-8'))
-            json.dump({'list': []}, open(self.path + 'cards_list.json', 'w', encoding='utf-8'))
+            # json.dump({'list': []}, open(self.path + 'cards_list.json', 'w', encoding='utf-8'))
         self.chracterlist = json.load(open(self.path + 'character_list.json', 'r', encoding='utf-8')) # 获取角色列表
         self.character = {} # 执行switch后保存当前角色信息
-        self.cards_list = json.load(open(self.path + 'cards_list.json', 'r', encoding='utf-8')) # 获取卡牌列表
+        # self.cards_list = json.load(open(self.path + 'cards_list.json', 'r', encoding='utf-8')) # 获取卡牌列表
         if self.chracterlist['now'] == None:
             self.character = None
         else:
