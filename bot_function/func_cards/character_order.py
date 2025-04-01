@@ -36,20 +36,19 @@ async def character_order(order, group_id, user_id):
         '卡牌库': P.show_card_list,
         '开始': start,
     }
-    
-    battle_dic = { # 指令列表
-        '抽牌堆': P.Pile.show_draw_pile,
-        '手牌': P.Pile.show_hand_pile,
-        '弃牌堆': P.Pile.show_discard_pile,
-        '消耗': P.Pile.show_exhausted_pile,
-        '抽牌': P.Pile.draw,
-        '使用': P.Pile.using,
-        '弃牌': P.Pile.discard,
-        '搜寻': P.Pile.search,
-        '回收': P.Pile.reclaim,
-        '结束': end,
-    }
-    
+    if not P.character == None:
+        battle_dic = { # 指令列表
+            '抽牌堆': P.Pile.show_draw_pile,
+            '手牌': P.Pile.show_hand_pile,
+            '弃牌堆': P.Pile.show_discard_pile,
+            '消耗': P.Pile.show_exhausted_pile,
+            '抽牌': P.Pile.draw,
+            '使用': P.Pile.using,
+            '弃牌': P.Pile.discard,
+            '搜寻': P.Pile.search,
+            '回收': P.Pile.reclaim,
+            '结束': end,
+        }
     try:
         if P.onbattle:
             if not order[0] in battle_dic_list: return [at_user(user_id), create_text_msg(' ' + '战斗中无法进行此操作')]
