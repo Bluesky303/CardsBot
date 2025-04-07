@@ -84,6 +84,7 @@ class Character:
         new_list = []
         for i in range(len(Pile)):
             if Pile[i]['attr'][:2] == '创造':
+                if Pile[i]['attr'][2:] not in self.character['cards']: return f'缺少被创造的卡牌:{Pile[i]['attr'][2:]}'
                 new_card = json.load(open(self.path + self.characterlist['now'] + '/' + Pile[i]['attr'][2:] + '.json', 'r', encoding='utf-8'))
                 if new_card not in new_list: new_list += [new_card]
         self.Pile = CardPile(Pile, new_list)
