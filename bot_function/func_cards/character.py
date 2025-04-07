@@ -284,7 +284,8 @@ class Character:
         if arg[0] not in self.cards_list['list']: return '卡牌不存在'
         if arg[0] in self.character['cards']:
             self.add_card([arg[0], '0'])
-        del self.cards_list['list'].pop(self.cards_list['list'].index(arg[0]))
+        index = self.cards_list['list'].index(arg[0])
+        del self.cards_list['list'].pop(index)
         os.system(f'del {self.path}{self.characterlist["now"]}/{arg[0]}.json'.replace('/', '\\'))
         self.save()
         return '已删除卡牌' + arg[0]
