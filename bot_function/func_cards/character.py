@@ -57,7 +57,6 @@ class Character:
         else:
             self.switch_character([self.characterlist['now']])
 
-        
     def save(self): # 保存
         '''
         保存
@@ -82,7 +81,12 @@ class Character:
         Pile = []
         for key, value in self.character['cards'].items():
             Pile += [json.load(open(self.path + self.characterlist['now'] + '/' + key + '.json', 'r', encoding='utf-8'))] * value
-        self.Pile = CardPile(Pile)
+        new_list = []
+        for i in range(len(Pile)):
+            if Pile[i]['attr'][:2] == '创造':
+                new_card = json.load(open(self.path + self.characterlist['now'] + '/' + Pile[i]['attr'][2:] + '.json', 'r', encoding='utf-8'))
+                if new_card not in new_list: new_list += [new_card]
+        self.Pile = CardPile(Pile, new_list)
         if os.path.exists(self.path + self.characterlist['now'] + '/' + 'battle.json'):
             self.onbattle = True
             battle = json.load(open(self.path + self.characterlist['now'] + '/' + 'battle.json', 'r', encoding='utf-8'))
