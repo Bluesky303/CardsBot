@@ -299,3 +299,4 @@ class Character:
     
     def end_battle(self, arg = []): # 结束战斗
         os.system(f'del {self.path}{self.characterlist["now"]}/battle.json'.replace('/', '\\'))
+        return '战斗结束'

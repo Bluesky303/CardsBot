@@ -113,23 +113,8 @@ async def character_order(order, group_id, user_id):
             if not order[0] in battle_dic_list + battle_dic_list_eng: 
                 return [at_user(user_id), create_text_msg(' ' + '战斗中无法进行此操作')]
             Piledata = battle_dic[order[0]](order[1:]) # 执行指令，返回值都是牌堆列表，表示需要展示牌堆信息
-            '''
-            例如：
-            当前抽牌堆：
-            0 打击*5
-            1 防御*5
-            '''
-            onbattle_dic = {
-                '结束': '&0', 'end': '&0',
-                '回合结束': '&1', 'ted': '&1'
-            }
-            
-            if order[0] in onbattle_dic:
-                d = {
-                    '&0': [at_user(user_id), create_text_msg(' ' + Piledata)],
-                    '&1': [at_user(user_id), create_text_msg(' 回合结束')],
-                }
-                return d[onbattle_dic[order[0]]]
+            if order[0] in ['结束', 'end', '回合结束', 'ted']:
+                return [at_user(user_id), create_text_msg(' ' + Piledata)]
             else:
                 P.save_battle()
                 Pile_text = [at_user(user_id), create_text_msg(f' 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
