@@ -3,3 +3,4 @@ myenv/
 **/__pycache__
 *.pyc
 init_default_character.py
+state.txt

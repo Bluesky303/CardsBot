@@ -191,6 +191,7 @@ class Character:
         if arg[0] == self.characterlist['now']: return '当前角色不能删除'
         self.characterlist['list'].remove(arg[0])
         os.system(f'rmdir {self.path}{arg[0]}'.replace('/', '\\'))
+        self.save()
         return '已删除角色' + arg[0]
     
     def modify_character_attr(self, arg): # 修改角色属性
@@ -272,6 +273,15 @@ class Character:
             self.character['cards']['基础卡'] = 15 - sum(self.character['cards'].values()) + self.character['cards']['基础卡']
         self.save()
         return self.show_now_character()
+    
+    def delete_card(self, arg): # 删除卡牌 
+        if self.character == None: return '当前没有角色'
+        if len(arg) == 0: return '请输入参数'
+        if arg[0] not in self.cards_list['list']: return '卡牌不存在'
+        del self.character['cards'][arg[0]]
+        os.system(f'del {self.path}{self.characterlist["now"]}/{arg[0]}.json'.replace('/', '\\'))
+        self.save()
+        return '已删除卡牌' + arg[0]
     
     def save_battle(self, arg = []): # 保存战斗
         if self.character == None: return '当前没有角色'

@@ -85,7 +85,7 @@ class CardPile:
         temp_draw = []
         for i in range(len(self.draw_pile)):
             if self.draw_pile[i]['name'] == name:
-                temp_draw.append(self.draw_pile[i], i)
+                temp_draw.append((self.draw_pile[i], i))
         random.shuffle(temp_draw)
         self.draw_pile = self.draw_pile[:temp_draw[0][1]] + self.draw_pile[temp_draw[0][1]+1:]
         self.hand_pile += [temp_draw[0][0]]
@@ -93,10 +93,13 @@ class CardPile:
     
     def reclaim(self, arg):
         name = arg[0]
+        temp_draw = []
         for i in range(len(self.discard_pile)):
             if self.discard_pile[i]['name'] == name:
-                self.draw_pile += [self.discard_pile[i]]
-                self.discard_pile = self.discard_pile[:i] + self.discard_pile[i+1:]
+                temp_draw.append((self.discard_pile[i], i))
+        random.shuffle(temp_draw)
+        self.discard_pile = self.discard_pile[:temp_draw[0][1]] + self.discard_pile[temp_draw[0][1]+1:]
+        self.draw_pile += [temp_draw[0][0]]
         return ('手牌', self.hand_pile)
     
 
