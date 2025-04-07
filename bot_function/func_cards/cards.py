@@ -99,7 +99,7 @@ class CardPile:
                 temp_draw.append((self.discard_pile[i], i))
         random.shuffle(temp_draw)
         self.discard_pile = self.discard_pile[:temp_draw[0][1]] + self.discard_pile[temp_draw[0][1]+1:]
-        self.draw_pile += [temp_draw[0][0]]
+        self.hand_pile += [temp_draw[0][0]]
         return ('手牌', self.hand_pile)
     
 
