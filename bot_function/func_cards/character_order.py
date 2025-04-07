@@ -123,7 +123,7 @@ async def character_order(order, group_id, user_id):
                 '结束': '&0', 'end': '&0',
                 '回合结束': '&1', 'ted': '&1'
             }
-            Pile_text = [at_user(user_id), create_text_msg(f' 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+            
             if order[0] in onbattle_dic:
                 d = {
                     '&0': [at_user(user_id), create_text_msg(' ' + Piledata)],
@@ -132,6 +132,7 @@ async def character_order(order, group_id, user_id):
                 return d[onbattle_dic[order[0]]]
             else:
                 P.save_battle()
+                Pile_text = [at_user(user_id), create_text_msg(f' 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
                 return Pile_text
         else:
             if not order[0] in character_dic_list + character_dic_list_eng: 
