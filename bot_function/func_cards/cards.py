@@ -62,8 +62,6 @@ class CardPile:
         cardnum = int(arg[0])
         if self.hand_pile[cardnum]['attr'] == '佚亡':
             self.exhausted_pile += [self.hand_pile[cardnum]]
-        elif self.hand_pile[cardnum]['attr'] == '回响':
-            self.draw_pile = [self.hand_pile[cardnum]] + self.draw_pile
         else:
             self.discard_pile += [self.hand_pile[cardnum]]
         self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
@@ -102,7 +100,15 @@ class CardPile:
         self.hand_pile += [temp_draw[0][0]]
         return ('手牌', self.hand_pile)
     
-
+    def turn_end(self, arg):
+        temp_exhausted = []
+        for i in range(len(self.discard_pile)):
+            if self.discard_pile[i]['attr'] == '佚亡':
+                temp_exhausted.append((self.discard_pile[i], i))
+        random.shuffle(temp_exhausted)
+        for i in temp_exhausted:
+            self.discard_pile = self.discard_pile[:i[1]] + self.discard_pile[i[1]+1:]
+            self.draw_pile += [i[0]]
 
         
     

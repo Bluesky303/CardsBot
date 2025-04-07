@@ -94,6 +94,7 @@ async def character_order(order, group_id, user_id):
     }
     if not P.character == None:
         battle_dic = { # 指令列表
+            '角色状态': P.show_now_character, 'cat': P.show_now_character,
             '抽牌堆': P.Pile.show_draw_pile, 'drp': P.Pile.show_draw_pile,
             '手牌': P.Pile.show_hand_pile, 'hap': P.Pile.show_hand_pile,
             '弃牌堆': P.Pile.show_discard_pile, 'dip': P.Pile.show_discard_pile,
@@ -103,6 +104,7 @@ async def character_order(order, group_id, user_id):
             '弃牌': P.Pile.discard, 'dis': P.Pile.discard,
             '搜寻': P.Pile.search, 'find': P.Pile.search,
             '回收': P.Pile.reclaim, 're': P.Pile.reclaim,
+            '回合结束': P.Pile.turn_end, 'ted': P.Pile.turn_end,
             '结束': end, 'end': end,
             'help': help,
         }
@@ -117,11 +119,16 @@ async def character_order(order, group_id, user_id):
             0 打击*5
             1 防御*5
             '''
-            if order[0] == '结束': 
-                return [at_user(user_id), create_text_msg(' ' + Piledata)]
+            onbattle_dic = {
+                '结束': [at_user(user_id), create_text_msg(' ' + Piledata)], 'end': [at_user(user_id), create_text_msg(' ' + Piledata)],
+                '回合结束': [at_user(user_id), create_text_msg(' 回合结束')], 'ted': [at_user(user_id), create_text_msg(' 回合结束')],
+            }
+            Pile_text = [at_user(user_id), create_text_msg(f' 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+            if order[0] in onbattle_dic:
+                return onbattle_dic[order[0]]
             else:
                 P.save_battle()
-                return [at_user(user_id), create_text_msg(f' 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+                return Pile_text
         else:
             if not order[0] in character_dic_list + character_dic_list_eng: 
                 return [at_user(user_id), create_text_msg(' ' + '非战斗状态无法进行此操作')]
