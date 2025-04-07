@@ -282,7 +282,9 @@ class Character:
         if self.character == None: return '当前没有角色'
         if len(arg) == 0: return '请输入参数'
         if arg[0] not in self.cards_list['list']: return '卡牌不存在'
-        del self.character['cards'][arg[0]]
+        if arg[0] in self.character['cards']:
+            self.add_card([arg[0], '0'])
+        del self.cards_list['list'][self.cards_list['list'].index(arg[0])]
         os.system(f'del {self.path}{self.characterlist["now"]}/{arg[0]}.json'.replace('/', '\\'))
         self.save()
         return '已删除卡牌' + arg[0]
