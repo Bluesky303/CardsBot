@@ -22,13 +22,13 @@ class Card:
         
     
 class CardPile:
-    def __init__(self, cards):
+    def __init__(self, cards, new_cards=[]):
         random.shuffle(cards)
         self.draw_pile = cards
         self.discard_pile = []
         self.hand_pile = []
         self.exhausted_pile = []
-    
+        self.new_pile = new_cards
     def show_draw_pile(self, arg = []):
         dic = {}
         for i in range(len(self.draw_pile)):
@@ -64,6 +64,10 @@ class CardPile:
             self.exhausted_pile += [self.hand_pile[cardnum]]
         else:
             self.discard_pile += [self.hand_pile[cardnum]]
+        if self.hand_pile[cardnum]['attr'][:2] == '创造':
+            for i in self.new_pile:
+                if i['name'] == self.hand_pile[cardnum]['attr'][2:]:
+                    self.hand_pile += [i]
         self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
         return ('手牌', self.hand_pile)
         
