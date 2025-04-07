@@ -190,7 +190,7 @@ class Character:
         if arg[0] not in self.characterlist['list']: return '角色不存在'
         if arg[0] == self.characterlist['now']: return '当前角色不能删除'
         self.characterlist['list'].remove(arg[0])
-        os.system(f'rmdir {self.path}{arg[0]}'.replace('/', '\\'))
+        os.system(f'rmdir /s /q {self.path}{arg[0]}'.replace('/', '\\'))
         self.save()
         return '已删除角色' + arg[0]
     
