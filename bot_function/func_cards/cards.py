@@ -104,6 +104,7 @@ class CardPile:
         temp_exhausted = []
         for i in range(len(self.discard_pile)):
             if self.discard_pile[i]['attr'] == '回响':
+                print(1)
                 temp_exhausted.append((self.discard_pile[i], i))
         random.shuffle(temp_exhausted)
         for i in temp_exhausted:
