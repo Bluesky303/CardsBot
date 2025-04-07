@@ -54,6 +54,8 @@ def help(arg):
     .find <card_name>
     .回收 <卡牌名> （从弃牌堆中获取一张对应名字的牌）
     .re <card_name>
+    .回合结束
+    .ted
 '''
 
 
