@@ -53,9 +53,9 @@ class CardPile:
         if len(self.draw_pile) < num:
             random.shuffle(self.discard_pile)
             self.draw_pile += self.discard_pile
+            self.discard_pile = []
         self.hand_pile += self.draw_pile[:num]
         self.draw_pile = self.draw_pile[num:]
-        self.discard_pile = []
         return ('手牌', self.hand_pile)
     
     def using(self, arg):
