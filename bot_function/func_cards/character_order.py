@@ -61,7 +61,7 @@ def help(arg):
 def rand(x, y):
     sum = 0
     for i in range(x):
-        sum += random.randint(0, y)
+        sum += random.randint(1, y)
     return sum 
 
 def dice(arg):
