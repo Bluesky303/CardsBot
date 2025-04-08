@@ -2,6 +2,7 @@
 角色相关指令
 '''
 import traceback
+import random
 
 from .character import *
 from ..message import *
@@ -57,6 +58,34 @@ def help(arg):
     .ted
 '''
 
+def rand(x, y):
+    sum = 0
+    for i in range(x):
+        sum += random.randint(0, y)
+    return sum 
+
+def dice(arg):
+    operator = ['+', '-', '*', '/', 'd']
+    l = []
+    last = 0
+    for i in range(len(arg[0])):
+        if arg[0][i] in operator:
+            l.append(arg[0][last:i])
+            l.append(arg[0][i])
+            last = i + 1
+    l.append(arg[0][last:])
+    l1 = l.copy()
+    for i in range(1, len(l), 2):
+        if l[i] in ['*', '/', 'd']:
+            dic = {
+                '*': lambda x, y: x * y,
+                '/': lambda x, y: x / y,
+                'd': lambda x, y: rand(x, y),
+            }
+            l1[i] = str(dic[l[i]](int(l1[i - 1]), int(l[i + 1])))
+            l1.pop(i - 1)
+            l1.pop(i)
+    return eval(''.join(l1))
 
 
 async def character_order(order, group_id, user_id):
@@ -92,6 +121,7 @@ async def character_order(order, group_id, user_id):
         '删除卡牌': P.delete_card, 'delca': P.delete_card,
         '开始': start, 'start': start,
         'help': help,
+        'r': dice, 
     }
     if not P.character == None:
         battle_dic = { # 指令列表
@@ -108,6 +138,7 @@ async def character_order(order, group_id, user_id):
             '回合结束': P.Pile.turn_end, 'ted': P.Pile.turn_end,
             '结束': end, 'end': end,
             'help': help,
+            'r': dice, 
         }
     try:
         if P.onbattle:
@@ -131,4 +162,3 @@ async def character_order(order, group_id, user_id):
     except Exception as e:
         print(traceback.format_exc())
         return [at_user(user_id), create_text_msg(' ' + '参数错误')]
-    
