@@ -69,6 +69,8 @@ class CardPile:
                 if i['name'] == self.hand_pile[cardnum]['attr'][2:]:
                     self.hand_pile += [i]
         self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
+        if self.hand_pile[cardnum]['name'] == "岩·天·使":
+            self.exhausted_pile += [self.hand_pile[cardnum]]
         return ('手牌', self.hand_pile)
         
     def discard(self, arg):
