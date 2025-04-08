@@ -85,7 +85,7 @@ def dice(arg):
             l1[i] = str(dic[l[i]](int(l1[i - 1]), int(l[i + 1])))
             l1.pop(i - 1)
             l1.pop(i)
-    return eval(''.join(l1))
+    return str(eval(''.join(l1)))
 
 
 async def character_order(order, group_id, user_id):
@@ -145,7 +145,7 @@ async def character_order(order, group_id, user_id):
             if not order[0] in battle_dic_list + battle_dic_list_eng: 
                 return [at_user(user_id), create_text_msg(' ' + '战斗中无法进行此操作')]
             Piledata = battle_dic[order[0]](order[1:]) # 执行指令，返回值都是牌堆列表，表示需要展示牌堆信息
-            if order[0] in ['结束', 'end']:
+            if order[0] in ['结束', 'end', 'r']:
                 return [at_user(user_id), create_text_msg(' ' + Piledata)]
             elif order[0] in ['回合结束', 'ted']:
                 P.save_battle()
