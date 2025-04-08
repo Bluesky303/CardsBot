@@ -61,7 +61,7 @@ def help(arg):
 
 async def character_order(order, group_id, user_id):
     character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '删除角色', '添加效果', '删除效果', '卡牌', '新建卡牌', '卡牌库', '删除卡牌', '开始', 'help']
-    character_dic_list_eng = ['cp', 'ls', 'cd', 'cp', 'cat', 'cacr', 'cals', 'ca', 'delca', 'start', 'help']
+    character_dic_list_eng = ['cp', 'ls', 'cd', 'cp', 'del', 'cat', 'cacr', 'cals', 'ca', 'delca', 'start', 'help']
     battle_dic_list = ['抽牌堆', '手牌', '弃牌堆', '消耗', '抽牌', '使用', '弃牌', '搜寻', '回收', '回合结束', '结束', 'help']
     battle_dic_list_eng = ['drp', 'hap', 'dip', 'ehp', 'dr', 'use', 'dis', 'find', 're', 'ted', 'end', 'help']
     if order[0] in character_dic_list + battle_dic_list + character_dic_list_eng + battle_dic_list_eng:
