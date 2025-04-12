@@ -58,35 +58,72 @@ def help(arg):
     .ted
 '''
 
-def rand(x, y):
-    sum = 0
-    for i in range(x):
-        sum += random.randint(1, y)
-    return sum 
+def tokenize_expression(s):
+    """将表达式分割为独立的标记（数字、运算符、括号）"""
+    tokens = []
+    current_token = ''
+    for char in s:
+        if char in '+-*/d()':
+            if current_token:
+                tokens.append(current_token)
+                current_token = ''
+            tokens.append(char)
+        else:
+            current_token += char
+    if current_token:
+        tokens.append(current_token)
+    return tokens
+
+def infix_to_postfix(tokens):
+    """将中缀表达式转换为后缀表达式（逆波兰表示法）"""
+    precedence = {'(': 5, 'd': 4, '*': 3, '/': 3, '+': 2, '-': 2, ')': 1}
+    output = []
+    stack = []
+    for token in tokens:
+        if token.isdigit():
+            output.append(token)
+        elif token == '(':
+            stack.append(token)
+        elif token == ')':
+            while stack and stack[-1] != '(':
+                output.append(stack.pop())
+            stack.pop()  # 弹出左括号
+        else:
+            while stack and stack[-1] != '(' and precedence[token] <= precedence.get(stack[-1], 0):
+                output.append(stack.pop())
+            stack.append(token)
+    while stack:
+        output.append(stack.pop())
+    return output
+
+def evaluate_postfix(postfix):
+    """计算后缀表达式，处理骰子运算符"""
+    stack = []
+    for token in postfix:
+        if token.isdigit():
+            stack.append(int(token))
+        else:
+            if token == 'd':
+                y = stack.pop()
+                x = stack.pop()
+                stack.append(sum(random.randint(1, y) for _ in range(x)))
+            else:
+                b = stack.pop()
+                a = stack.pop()
+                if token == '+': stack.append(a + b)
+                elif token == '-': stack.append(a - b)
+                elif token == '*': stack.append(a * b)
+                elif token == '/': stack.append(a // b)  # 整除
+    return stack[0]
+
+def evaluate_dice_expression(expr):
+    """整合流程：词法分析 -> 语法分析 -> 计算"""
+    tokens = tokenize_expression(expr)
+    postfix = infix_to_postfix(tokens)
+    return evaluate_postfix(postfix)
 
 def dice(arg):
-    operator = ['+', '-', '*', '/', 'd']
-    l = []
-    last = 0
-    for i in range(len(arg[0])):
-        if arg[0][i] in operator:
-            l.append(arg[0][last:i])
-            l.append(arg[0][i])
-            last = i + 1
-    l.append(arg[0][last:])
-    l1 = l.copy()
-    for i in range(1, len(l), 2):
-        if l[i] in ['*', '/', 'd']:
-            dic = {
-                '*': lambda x, y: x * y,
-                '/': lambda x, y: x / y,
-                'd': lambda x, y: rand(x, y),
-            }
-            l1[i] = str(dic[l[i]](int(l1[i - 1]), int(l[i + 1])))
-            l1.pop(i - 1)
-            l1.pop(i)
-    return str(eval(''.join(l1)))
-
+    return evaluate_dice_expression(arg[0])
 
 async def character_order(order, group_id, user_id):
     character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '删除角色', '添加效果', '删除效果', '卡牌', '新建卡牌', '卡牌库', '删除卡牌', '开始', 'help', 'r']
