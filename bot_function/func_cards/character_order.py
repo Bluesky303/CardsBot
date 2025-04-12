@@ -123,7 +123,7 @@ def evaluate_dice_expression(expr):
     return evaluate_postfix(postfix)
 
 def dice(arg):
-    return evaluate_dice_expression(arg[0])
+    return str(evaluate_dice_expression(arg[0]))
 
 async def character_order(order, group_id, user_id):
     character_dic_list = ['角色状态', '角色列表', '创建角色', '切换角色', '修改角色属性', '删除角色', '添加效果', '删除效果', '卡牌', '新建卡牌', '卡牌库', '删除卡牌', '开始', 'help', 'r']
