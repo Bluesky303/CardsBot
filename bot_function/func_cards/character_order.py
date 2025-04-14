@@ -186,10 +186,20 @@ async def character_order(order, group_id, user_id):
                 return [at_user(user_id), create_text_msg(' ' + Piledata)]
             elif order[0] in ['回合结束', 'ted']:
                 P.save_battle()
-                return [at_user(user_id), create_text_msg(' ' + Piledata)]
+                if Piledata[1] == []:
+                    return [at_user(user_id), create_text_msg(f' {Piledata[0]}')]
+                else:
+                    return [at_user(user_id), create_text_msg(f' {Piledata[0]}\n' + ','.join([i['name'] for i in Piledata[1]]))]
             else:
                 P.save_battle()
-                Pile_text = [at_user(user_id), create_text_msg(f' 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+                if len(Piledata) == 2:
+                    Pile_text = [at_user(user_id), create_text_msg(f' 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+                if len(Piledata) == 3:
+                    Pile_text = [at_user(user_id), create_text_msg(f'使用了{Piledata[2]}\n 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+                if len(Piledata) == 4:
+                    Pile_text = [at_user(user_id), create_text_msg(f'使用了{Piledata[2]}, {Piledata[2]}{Piledata[3]}了\n 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
+                if len(Piledata) == 5:
+                    Pile_text = [at_user(user_id), create_text_msg(f'使用了{Piledata[2]}, {Piledata[2]}{Piledata[3]}了{Piledata[4]},\n 当前{Piledata[0]}:\n' + '\n'.join([str(num) + ' ' + Piledata[1][num]['name'] for num in range(len(Piledata[1]))]))]
                 return Pile_text
         else:
             if not order[0] in character_dic_list + character_dic_list_eng: 

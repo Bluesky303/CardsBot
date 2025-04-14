@@ -60,6 +60,7 @@ class CardPile:
     
     def using(self, arg):
         cardnum = int(arg[0])
+        name = self.hand_pile[cardnum]['name']
         if self.hand_pile[cardnum]['attr'] == '佚亡' or self.hand_pile[cardnum]['name'] == '岩·天·使':
             self.exhausted_pile += [self.hand_pile[cardnum]]
         else:
@@ -69,7 +70,8 @@ class CardPile:
                 if i['name'] == self.hand_pile[cardnum]['attr'][2:]:
                     self.hand_pile += [i]
         self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
-        return ('手牌', self.hand_pile)
+        re = ('手牌', self.hand_pile, name)
+        return re
         
     def discard(self, arg):
         intermidiate = []
