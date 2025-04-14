@@ -61,16 +61,20 @@ class CardPile:
     def using(self, arg):
         cardnum = int(arg[0])
         name = self.hand_pile[cardnum]['name']
+        a = ()
         if self.hand_pile[cardnum]['attr'] == '佚亡' or self.hand_pile[cardnum]['name'] == '岩·天·使':
             self.exhausted_pile += [self.hand_pile[cardnum]]
+            a = ('佚亡')
         else:
             self.discard_pile += [self.hand_pile[cardnum]]
         if self.hand_pile[cardnum]['attr'][:2] == '创造':
             for i in self.new_pile:
                 if i['name'] == self.hand_pile[cardnum]['attr'][2:]:
                     self.hand_pile += [i]
+                    a = ('创造', i['name'])
+                    break
         self.hand_pile = self.hand_pile[:cardnum] + self.hand_pile[cardnum+1:]
-        re = ('手牌', self.hand_pile, name)
+        re = ('手牌', self.hand_pile, name) + a
         return re
         
     def discard(self, arg):
@@ -110,13 +114,13 @@ class CardPile:
         temp_exhausted = []
         for i in range(len(self.discard_pile)):
             if self.discard_pile[i]['attr'] == '回响':
+                self.discard_pile[i]['attr'] = '佚亡'
                 temp_exhausted.append((self.discard_pile[i], i))
         random.shuffle(temp_exhausted)
-        print(temp_exhausted)
         for i in temp_exhausted:
             self.discard_pile = self.discard_pile[:i[1]] + self.discard_pile[i[1]+1:]
             self.draw_pile = [i[0]] + self.draw_pile
-        return '回合结束'
+        return ('回合结束', [x[0] for x in temp_exhausted])
         
     
 
