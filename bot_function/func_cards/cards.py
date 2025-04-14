@@ -64,7 +64,7 @@ class CardPile:
         a = ()
         if self.hand_pile[cardnum]['attr'] == '佚亡' or self.hand_pile[cardnum]['name'] == '岩·天·使':
             self.exhausted_pile += [self.hand_pile[cardnum]]
-            a = ('佚亡')
+            a = ('佚亡', )
         else:
             self.discard_pile += [self.hand_pile[cardnum]]
         if self.hand_pile[cardnum]['attr'][:2] == '创造':
