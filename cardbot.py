@@ -12,6 +12,7 @@ Characters = {}
 async def root(request: Request):
     global Characters
     data = await request.json()
+    print(data)
     if 'raw_message' in data and data['raw_message'][0] == '.':
         group_id = data['group_id']
         user_id = data['user_id']
