@@ -189,7 +189,7 @@ async def character_order(order, group_id, user_id):
                 if Piledata[1] == []:
                     return [at_user(user_id), create_text_msg(f' {Piledata[0]}')]
                 else:
-                    return [at_user(user_id), create_text_msg(f' {Piledata[0]}\n' + ','.join([i['name'] for i in Piledata[1]]))]
+                    return [at_user(user_id), create_text_msg(f' {Piledata[0]}\n' + ','.join([i['name'] for i in Piledata[1]]) + '回响了')]
             else:
                 P.save_battle()
                 if len(Piledata) == 2:
